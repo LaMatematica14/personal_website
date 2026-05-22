@@ -1,0 +1,27 @@
+{
+  "name": "personal_website",
+  "version": "1.0.0",
+  "description": "Begins as a presentation for Italian high school graduation exam, goes on from there",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaMatematica14/personal_website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LaMatematica14/personal_website/issues"
+  },
+  "homepage": "https://github.com/LaMatematica14/personal_website#readme",
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/merriweather": "^5.2.11",
+    "astro": "^6.3.7"
+  }
+}

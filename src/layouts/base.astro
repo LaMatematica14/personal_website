@@ -1,0 +1,142 @@
+---
+// 1. FRONTMATTER: Handle page-specific metadata passed down as props
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "LaMatematica14 si presenta", 
+  description = "Welcome to my personal corner of the internet." 
+} = Astro.props;
+
+import '@fontsource/merriweather';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+  </head>
+  
+  <body>
+    <div class="layout-wrapper">
+      <header class="site-header">
+        <nav class="nav-container">
+          <a href="/" class="logo">Home</a>
+          <div class="nav-links">
+            <a href="/about">Chi sono?</a>
+            <a href="/progetti">Progetti</a>
+            <a href="/fsl">FSL</a>
+            <a href="/links">Altri link</a>
+          </div>
+        </nav>
+      </header>
+
+      <main class="main-content">
+        <!-- 2. THE SLOT: This is where your page content goes -->
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <p>&copy; {new Date().getFullYear()} — Built with Astro</p>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  /* 3. GLOBAL STYLES: Base resets and design tokens */
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --accent-color-light: #818cf8;
+    --accent-color-dark: #818cf8;
+    --max-width: 800px;
+  }
+
+  /* Dark mode support out of the box */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #01091c; /* Slate 900 */
+      --text-color: #f8fafc;
+      --accent-color-light: #8891df;
+      --accent-color-dark: #101a7a;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Merriweather', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Layout Constraints */
+  .layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .main-content {
+    flex: 1; /* Pushes the footer to the bottom of the page */
+    padding: 3rem 0;
+  }
+
+  /* Header Navigation styling */
+  .site-header {
+    padding: 1.5rem 0;
+    background-color: var(--accent-color-dark);
+    width: 100%;
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .nav-links a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent-color);
+  }
+
+  .site-footer {
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+    opacity: 0.7;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+  }
+</style>
