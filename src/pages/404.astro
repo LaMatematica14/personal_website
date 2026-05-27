@@ -1,17 +1,22 @@
 ---
 // Welcome to Astro! Everything between these triple-dash code fences
 // is your "component frontmatter". It never runs in the browser.
-console.log('This runs in your terminal, not the browser!');
+import BaseLayout from '../layouts/base.astro';
 ---
-<!-- Below is your "component template." It's just HTML, but with
-    some magic sprinkled in to help you build great templates. -->
-<html>
-  <body>
-    <h1>Haven't found what you're looking for... Try again</h1>
-  </body>
-</html>
-<style>
-  h1 {
-    color: grey;
-  }
-</style>
+
+
+<BaseLayout title="404 error" description="Something went wrong...">
+
+  <div style="text-align: center; flex: 1">
+    <img 
+      style="max-width: 500px;
+      padding: 1.5rem ;
+      width: 80%;
+      height: auto;" 
+      src="/404.jpg" 
+      alt="An error was detected."
+    >
+  </div>
+  
+  <p class="centered">Purtroppo la pagina che stavi cercando non è stata trovata, riprova...</p>
+</BaseLayout>
