@@ -10,7 +10,9 @@ const {
   description = "Welcome to my personal corner of the internet." 
 } = Astro.props;
 
+
 import '@fontsource/merriweather';
+import HeaderDropdowns from '../components/header_dropdowns.astro';'../components/header_dropdowns.astro'
 ---
 
 <!DOCTYPE html>
@@ -37,42 +39,32 @@ import '@fontsource/merriweather';
 
             <a href="/about"> <b> Chi sono? </b> </a>
 
-            <div class="dropdown">
-              <span class="dropdown-trigger">
-                <b>Progetti</b> <span class="chevron">▼</span>
-              </span>
-              <div class="dropdown-menu">
-                <a href="/progetti/cp"> Programmazione Competitiva </a>
-                <a href="/progetti/f1inschools">F1inSchools</a>
-                <a href="/progetti/scolastici">Elaborati scolastici</a>
-                <a href="/progetti/musica"> Musica </a>
-              </div>
-            </div>
+            <HeaderDropdowns title = "Progetti" main_page = '/progetti/intro'
+              options = {[
+                { label: 'Programmazione competitiva', url: '/progetti/cp' },
+                { label: 'F1inSchools', url: '/progetti/f1inschools' },
+                { label: 'Scolastici', url: '/progetti/scolastici' },
+                { label: 'Musica', url: '/progetti/arte'}
+              ]}
+            />
 
-            <div class="dropdown">
-              <span class="dropdown-trigger">
-                <b>FSL</b> <span class="chevron">▼</span>
-              </span>
-              <div class="dropdown-menu">
-                <a href="/PresentazioneFSL.pdf" target="_blank" rel="noopener noreferrer"> Presentazione </a>
-                <a href="/fsl#google">Stage Google Zurigo</a>
-                <a href="/fsl#egmo_camp"> EGMO Camp </a>
-                <a href="/fsl#mathesis"> Stage Mathesis </a>
-                <a href="/fsl#aif"> Stage AIF </a>
-                <a href="/fsl#scolastici"> A scuola </a>
-              </div>
-            </div>
+            <HeaderDropdowns title="FSL" main_page = '/fsl/intro'
+              options={[
+                { label: 'Presentazione', url: '/PresentazioneFSL.pdf' },
+                { label: 'Stage Google', url: '/fsl#google' },
+                { label: 'EGMO Camp', url: '/fsl#egmo_camp' },
+                { label: 'Stage di matematica e fisica', url: '/fsl#aif_e_mathesis' },
+                { label: 'A scuola', url: '/fsl#scolastici' }
+              ]} 
+            />
 
-            <div class="dropdown">
-              <span class="dropdown-trigger">
-                <b>Riconoscimenti</b> <span class="chevron">▼</span>
-              </span>
-              <div class="dropdown-menu">
-                <a href="/riconoscimenti/olimpiadi_informatica">Olimpiadi di informatica</a>
-                <a href="/riconoscimenti/olimpiadi_fisica">Olimpiadi di fisica</a>
-                <a href="/riconoscimenti/altro"> Altri premi</a>
-              </div>
-            </div>
+            <HeaderDropdowns title="Riconoscimenti"  main_page = '/riconoscimenti/intro'
+              options={[
+                { label: 'Olimpiadi di informatica', url: '/riconoscimenti/olinfo' },
+                { label: 'Olimpiadi di fisica', url: '/riconoscimenti/olifis' },
+                { label: 'Altri premi', url: '/riconoscimenti/altro' }
+              ]} 
+            />
 
             <a href="/links"> <b> Altri link </b></a>
           </div>
@@ -81,7 +73,6 @@ import '@fontsource/merriweather';
       
 
       <main class="main-content">
-        <!-- 2. THE SLOT: This is where your page content goes -->
         <slot />
       </main>
 
@@ -181,111 +172,6 @@ import '@fontsource/merriweather';
 
   .nav-links a:hover {
     color: var(--accent-color-1);
-  }
-
-  /* Dropdown container */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-
-  /* Dropdown Trigger */
-  .dropdown-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-left: 1.5rem;
-    text-decoration: none;
-    color: var(--text-color);
-    transition: color 0.2s ease;
-    cursor: pointer;
-    padding: 0.5rem 0;
-  }
-
-  .chevron {
-    font-size: 0.65rem;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.7;
-    display: inline-block;
-  }
-
-  .dropdown:hover .chevron {
-    transform: rotate(180deg);
-  }
-
-  /* Glassmorphism Dropdown Menu */
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 1.5rem; /* align with trigger text margin */
-    min-width: 230px;
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(128, 128, 128, 0.15);
-    border-radius: 12px;
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.05), 
-      0 10px 30px -5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px) scale(0.98);
-    transition: 
-      opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
-      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
-      visibility 0.25s;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  /* Dark mode glassmorphism */
-  @media (prefers-color-scheme: dark) {
-    .dropdown-menu {
-      background: rgba(1, 9, 28, 0.75);
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.2), 
-        0 10px 30px -5px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-    }
-  }
-
-  /* Show dropdown on hover only */
-  .dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-  }
-
-  /* Dropdown Links */
-  .dropdown-menu a {
-    margin: 0 !important;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
-    border-radius: 8px;
-    display: block;
-    font-weight: 500;
-    text-align: left;
-  }
-
-  .dropdown-menu a:hover {
-    background-color: rgba(129, 140, 248, 0.12); /* Subtle accent color background */
-    color: var(--accent-color-1);
-    transform: translateX(4px); /* Sleek shift animation */
-  }
-
-  /* Smooth focus ring for accessibility */
-  .dropdown-trigger:focus-visible,
-  .dropdown-menu a:focus-visible {
-    outline: 2px solid var(--accent-color-1);
-    outline-offset: 2px;
-    border-radius: 4px;
   }
 
   .site-footer {

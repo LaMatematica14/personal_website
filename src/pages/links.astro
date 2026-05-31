@@ -86,7 +86,7 @@ import BaseLayout from '../layouts/base.astro';
               <i class="material-icons download-icon">download</i>
               <div class="cv-btn-text">
                 <h3>Scarica il mio CV</h3>
-                <p>Formato PDF — Aggiornato a Maggio 2026</p>
+                <p> Aggiornato a Maggio 2026</p>
               </div>
             </div>
             <i class="material-icons arrow-down">arrow_downward</i>
@@ -96,6 +96,8 @@ import BaseLayout from '../layouts/base.astro';
     </div>
   </div>
 </BaseLayout>
+
+
 <style>
   .links-page-wrapper {
     position: relative;
@@ -152,62 +154,7 @@ import BaseLayout from '../layouts/base.astro';
     align-items: center;
     gap: 3rem;
   }
-  /* Profile Header */
-  .profile-header {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .avatar-ring {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    padding: 3px;
-    background: linear-gradient(135deg, var(--accent-color-1) 0%, #ff85a2 100%);
-    box-shadow: 0 10px 25px -5px rgba(129, 140, 248, 0.4);
-    animation: rotateRing 8s linear infinite;
-  }
-  @keyframes rotateRing {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  .avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: counterRotateRing 8s linear infinite;
-  }
-  @keyframes counterRotateRing {
-    100% {
-      transform: rotate(-360deg);
-    }
-  }
-  .avatar-initials {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text-color);
-    letter-spacing: -1px;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
-  .profile-header h1 {
-    font-size: 2.4rem;
-    font-weight: 800;
-    color: var(--text-color);
-    margin-top: 0.5rem;
-  }
-  .subtitle {
-    font-size: 1.05rem;
-    opacity: 0.8;
-    font-weight: 500;
-  }
+  
   /* Links Grid & Sections */
   .links-grid {
     width: 100%;
@@ -295,7 +242,7 @@ import BaseLayout from '../layouts/base.astro';
     transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   }
   .link-card:hover .card-icon {
-    transform: rotate(8deg) scale(1.1);
+    transform: scale(1.1);
     background-color: var(--accent-color-1);
     color: #fff;
   }

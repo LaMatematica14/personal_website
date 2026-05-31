@@ -4,5 +4,39 @@ import BaseLayout from '../layouts/base.astro';
 
 
 <BaseLayout title="Chi sono?" description="Mi presento">
+        <img src="me.jpg" alt="Una foto di me" class="presentation-photo">
+        
+        <div class="presentation-text"> 
+            <p>
+                Ciao! 
+                <br/><br/>
+                Sono Sofia Maragò una studentessa liceale di 5a superiore.
+                <br/><br/>
+                Se dovessi descrivermi in una parola credo che sceglierei "curiosa" perché è la curiosità, oltre alla determinazione, ad avermi portato a dove sono ora.
+            </p>
+        </div>
   
 </BaseLayout>
+
+<style>
+    
+    .presentation-photo{
+        float: left;
+        margin-top: 40px;
+        margin-left: 100px;
+        width: 450px;
+    }
+
+    .presentation-text{
+        margin-top: 110px;
+        margin-right: 100px;
+        align-items: center;
+        width: 600px;
+        float: right;
+        font-size: 18px;
+    }
+
+    .presentation-text text {
+
+    }
+</style>

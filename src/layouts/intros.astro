@@ -1,0 +1,29 @@
+---
+import BaseLayout from './base.astro';
+const { title, description } = Astro.props;
+const {heading} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class = "heading-text">
+    <h1> {heading} </h1>
+  </div>
+  
+
+  <div class="secondary-wrapper">
+    <slot/>
+  </div>
+</BaseLayout>
+
+<style>
+  .secondary-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1rem;
+  }
+  
+  .heading-text {
+    align-items: center;
+    justify-self: center;
+  }
+</style>

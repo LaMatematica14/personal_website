@@ -3,6 +3,7 @@
 // is your "component frontmatter". It never runs in the browser.
 console.log('This runs in your terminal, not the browser!');
 import BaseLayout from '../layouts/base.astro';
+import Desc_Box from '../components/short_description_box.astro'
 ---
 
 
@@ -11,8 +12,12 @@ import BaseLayout from '../layouts/base.astro';
     <div class="presenting-images">
         // fun animated image of me 
     </div>
-    <div class="featured-links">
 
+    <div class="featured-links">
+      <Desc_Box link = '/a' img = '404.jpg' >
+        <h3> Title </h3>
+        <p> A lot of text </p>
+      </Desc_Box>
     </div>
   </div>
 </BaseLayout>

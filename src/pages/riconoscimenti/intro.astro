@@ -1,0 +1,21 @@
+---
+import IntroLayout from '../../layouts/intros.astro';
+import Desc_Box from '../../components/short_description_box.astro'
+
+---
+
+
+<IntroLayout title="Progetti" description="Overview dei miei progetti"
+    heading = "Premi e riconoscimenti che ho ricevuto">
+  <Desc_Box link = '/progetti/cp' img = '/code.jpg'>
+    <h3> Alle Olimpiadi di informatica </h3>
+  </Desc_Box>
+
+  <Desc_Box link = '/progetti/f1inschools' img = '/f1inschools.jpg'>
+    <h3> Alle Olimpiadi di fisica </h3>
+  </Desc_Box>
+
+  <Desc_Box link = '/progetti/scolastici' img = '/404.jpg'>
+    <h3> Altri premi </h3>
+  </Desc_Box>
+</IntroLayout>

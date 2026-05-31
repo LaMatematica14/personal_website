@@ -1,0 +1,25 @@
+---
+import IntroLayout from '../../layouts/intros.astro';
+import Desc_Box from '../../components/short_description_box.astro'
+
+---
+
+
+<IntroLayout title="Progetti" description="Overview dei miei progetti"
+    heading = "Le mie attività di formazione scuola-lavoro">
+  <Desc_Box link = '/progetti/google' img = '/code.jpg'>
+    <h3> Stage di ricerca a Google Zurigo </h3>
+  </Desc_Box>
+
+  <Desc_Box link = '/progetti/egmo_camp' img = '/code.jpg'>
+    <h3> EGMOCamp - Matematica a Pisa </h3>
+  </Desc_Box>
+
+  <Desc_Box link = '/progetti/scolastici' img = '/code.jpg'>
+    <h3> Progetti a scuola</h3>
+  </Desc_Box>
+
+  <Desc_Box link = '/progetti/scolastici' img = '/code.jpg'>
+    <h3> Stage di matematica e fisica nel quinquennio </h3>
+  </Desc_Box>
+</IntroLayout>
