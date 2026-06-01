@@ -4,18 +4,23 @@ import BaseLayout from '../layouts/base.astro';
 
 
 <BaseLayout title="Chi sono?" description="Mi presento">
+    <div class="main-frame">
         <img src="me.jpg" alt="Una foto di me" class="presentation-photo">
         
         <div class="presentation-text"> 
             <p>
-                Ciao! 
+                <b>Ciao!</b> 
                 <br/><br/>
-                Sono Sofia Maragò una studentessa liceale di 5a superiore.
+                Sono Sofia Maragò, una studentessa liceale di 5a superiore.
                 <br/><br/>
-                Se dovessi descrivermi in una parola credo che sceglierei "curiosa" perché è la curiosità, oltre alla determinazione, ad avermi portato a dove sono ora.
+                Se dovessi descrivermi in una parola credo che sceglierei "curiosa" perché è la volontà di conoscere ed esplorare il mondo che spesso guida le mie scelte.
+                <br/><br/>
+                La mia passione più grande è per la matematica, soprattutto in campo di logica e di algoritmica, ma allo stesso tempo apprezzo molto anche la fisica e la filosofia, oltre alla musica e la danza.
+                <br/><br/>
+                Se vuoi scoprire di più su di me naviga questo sito oppure scarica il mio CV dalla sezione "Altri link".
             </p>
         </div>
-  
+    </div>
 </BaseLayout>
 
 <style>
@@ -23,20 +28,22 @@ import BaseLayout from '../layouts/base.astro';
     .presentation-photo{
         float: left;
         margin-top: 40px;
-        margin-left: 100px;
+        margin-left: 14%;
         width: 450px;
     }
 
     .presentation-text{
-        margin-top: 110px;
-        margin-right: 100px;
+        margin-top: 105px;
+        margin-right: 14%;
         align-items: center;
         width: 600px;
         float: right;
         font-size: 18px;
     }
 
-    .presentation-text text {
-
+    .main-frame{
+        padding: 5rem 4rem;
+        flex:1;
     }
+    
 </style>

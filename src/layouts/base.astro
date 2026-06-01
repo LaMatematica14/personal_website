@@ -71,10 +71,7 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
         </nav>
       </header>
       
-
-      <main class="main-content">
-        <slot />
-      </main>
+      <slot />
 
       <footer class="site-footer">
         <p>&copy; {new Date().getFullYear()} — Built with Astro</p>
@@ -84,7 +81,6 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
 </html>
 
 <style is:global>
-  /* 3. GLOBAL STYLES: Base resets and design tokens */
   :root {
     --bg-color: #ffffff;
     --text-color: #1a1a1a;
@@ -96,9 +92,9 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
   /* Dark mode support out of the box */
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg-color: #01091c; /* Slate 900 */
+      --bg-color: #000a20; /* Slate 900 */
       --text-color: #f8fafc;
-      --accent-color-1: #8891df;
+      --accent-color-1: #6672d9;
       --accent-color-2: #101a7a;
     }
   }
@@ -124,12 +120,6 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
     min-height: 100vh;
     max-width: var(--max-width);
     margin: 0;
-    padding: 0 1.5rem;
-  }
-
-  .main-content {
-    flex: 1; /* Pushes the footer to the bottom of the page */
-    padding: 2rem 0;
   }
 
   .centered {
@@ -138,7 +128,12 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
 
   /* Header Navigation styling */
   .site-header {
-    padding: 1.5rem 0;
+    background-color: var(--bg-color);
+    padding-top: 1.2rem;
+    padding-right: 2rem;
+    padding-left: 1.7rem;
+    padding-bottom: 0.3rem;
+
     width: 100%;
   }
 
@@ -150,8 +145,13 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
 
   .logo {
     font-weight: 700;
+    scale: 120%;
+    padding: 1%;
     text-decoration: none;
     color: var(--text-color);
+  }
+  .logo :hover {
+    color: var(--accent-color-1);
   }
 
   /* Navigation styling */
@@ -176,9 +176,9 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
 
   .site-footer {
     padding: 2rem 0;
+    background-color: var(--bg-color);
     text-align: center;
     font-size: 0.875rem;
-    opacity: 0.7;
     border-top: 1px solid rgba(128, 128, 128, 0.2);
   }
 </style>

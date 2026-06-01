@@ -4,10 +4,9 @@
 import BaseLayout from '../layouts/base.astro';
 ---
 
-
 <BaseLayout title="404 error" description="Something went wrong...">
 
-  <div style="text-align: center; flex: 1">
+  <div style="text-align: center; flex: 1; padding: 3rem 4rem">
     <img 
       style="max-width: 500px;
       padding: 1.5rem ;
@@ -16,7 +15,8 @@ import BaseLayout from '../layouts/base.astro';
       src="/404.jpg" 
       alt="An error was detected."
     >
+    <p class="centered">Purtroppo la pagina che stavi cercando non è stata trovata, riprova...</p>
+
   </div>
   
-  <p class="centered">Purtroppo la pagina che stavi cercando non è stata trovata, riprova...</p>
 </BaseLayout>

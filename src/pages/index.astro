@@ -4,20 +4,46 @@
 console.log('This runs in your terminal, not the browser!');
 import BaseLayout from '../layouts/base.astro';
 import Desc_Box from '../components/short_description_box.astro'
+
 ---
 
 
 <BaseLayout title="Sofia Maragò" description="La mia pagina principale.">
-  <div class="page-wrapper">
-    <div class="presenting-images">
-        // fun animated image of me 
-    </div>
+  <section class = "spacing">
+  </section> 
 
+  <section class = "main-content">
+    
     <div class="featured-links">
-      <Desc_Box link = '/a' img = '404.jpg' >
-        <h3> Title </h3>
-        <p> A lot of text </p>
-      </Desc_Box>
-    </div>
+    <Desc_Box link = '/a' img = '404.jpg' >
+      <h3> Title </h3>
+      <p> A lot of text </p>
+    </Desc_Box>
   </div>
+  </section>
+
+  
+
+  <style>
+    body{
+      background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/af/FB_Warszawa_panorama.jpg);
+      background-size: 150%; 
+      background-position: center;
+    }
+
+    .spacing {
+      background-color: transparent;
+      min-height: 400px;
+    }
+
+    .main-content {
+      background-color: var(--bg-color);
+    }
+
+    .featured-links {
+      flex: 1;
+      padding: 3rem 4rem;
+    }
+  </style>
 </BaseLayout>
+
