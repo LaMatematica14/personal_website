@@ -4,21 +4,38 @@
 console.log('This runs in your terminal, not the browser!');
 import BaseLayout from '../layouts/base.astro';
 import Desc_Box from '../components/short_description_box.astro'
+//import '@fontsource/terminus';
 
 ---
 
 
 <BaseLayout title="Sofia Maragò" description="La mia pagina principale.">
   <section class = "spacing">
+    <h1> Ciao! Sono Sofia Maragò. <br><hr> Benvenutə al mio sito</h1>
   </section> 
 
   <section class = "main-content">
     
     <div class="featured-links">
-    <Desc_Box link = '/a' img = '404.jpg' >
-      <h3> Title </h3>
-      <p> A lot of text </p>
-    </Desc_Box>
+      <h2 style="font-family: 'Terminus', Courier, 'Courier New', monospace;"> 
+        Se è la prima volta che sei qui ecco alcune pagine consigliate: 
+      </h2>
+      <div class="card-grid">
+        <Desc_Box link = '/about' img = 'me.jpg' >
+          <h3> Mi presento in due parole </h3>
+        </Desc_Box>
+        <Desc_Box link = '/fsl/google' img = 'google_hq.jpg' >
+          <h3> Ti racconto la mia esperienza di FSL a Google Zurigo (CH)</h3>
+        </Desc_Box>
+
+        <Desc_Box link = '/progetti/f1inschools' img = 'f1_building_stand.jpg' >
+          <h3> Ti racconto la mia partecipazione a F1inSchools </h3>
+        </Desc_Box>
+
+        <Desc_Box link = '/riconoscimenti/olinfo' img = 'olinfo2025.jpg' >
+          <h3> Ti racconto la mia esperienza alle Olimpiadi di informatica </h3>
+        </Desc_Box>
+      </div>
   </div>
   </section>
 
@@ -26,14 +43,24 @@ import Desc_Box from '../components/short_description_box.astro'
 
   <style>
     body{
-      background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/af/FB_Warszawa_panorama.jpg);
-      background-size: 150%; 
+      background-image: url("/background.png");
+      background-size: 100%; 
       background-position: center;
     }
 
     .spacing {
-      background-color: transparent;
-      min-height: 400px;
+      display: flex;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 3rem 4rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 600px;
+      font-family: 'Terminus', Courier, 'Courier New', monospace;
+      font-size: 50px;
+    }
+
+    .spacing h1{
+      text-align: center;
     }
 
     .main-content {
@@ -43,6 +70,13 @@ import Desc_Box from '../components/short_description_box.astro'
     .featured-links {
       flex: 1;
       padding: 3rem 4rem;
+    }
+
+    .card-grid {
+      padding: 3rem 0rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1rem;
     }
   </style>
 </BaseLayout>

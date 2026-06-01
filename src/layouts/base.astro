@@ -37,12 +37,15 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
           <a href="/" class="logo"><i class="material-icons">home</i></a>
           <div class="nav-links">
 
-            <a href="/about"> <b> Chi sono? </b> </a>
+            <a href="/about" style="padding-left: 1rem"> <b> Chi sono? </b> </a>
+
+            <a href="/viaggi"style="padding-left: 1rem"> <b> Viaggi</b> </a>
 
             <HeaderDropdowns title = "Progetti" main_page = '/progetti/intro'
               options = {[
                 { label: 'Programmazione competitiva', url: '/progetti/cp' },
                 { label: 'F1inSchools', url: '/progetti/f1inschools' },
+                { label: 'SWERC', url: '/progetti/swerc' },
                 { label: 'Scolastici', url: '/progetti/scolastici' },
                 { label: 'Musica', url: '/progetti/arte'}
               ]}
@@ -60,13 +63,13 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
 
             <HeaderDropdowns title="Riconoscimenti"  main_page = '/riconoscimenti/intro'
               options={[
-                { label: 'Olimpiadi di informatica', url: '/riconoscimenti/olinfo' },
+                { label: 'Olimpiadi di informatica', url: '/olinfo/intro' },
                 { label: 'Olimpiadi di fisica', url: '/riconoscimenti/olifis' },
                 { label: 'Altri premi', url: '/riconoscimenti/altro' }
               ]} 
             />
 
-            <a href="/links"> <b> Altri link </b></a>
+            <a href="/links" style="padding-left: 1rem"> <b> Altri link </b></a>
           </div>
         </nav>
       </header>
@@ -84,6 +87,7 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
   :root {
     --bg-color: #ffffff;
     --text-color: #1a1a1a;
+    --card-background: #818cf8;
     --accent-color-1: #818cf8;
     --accent-color-2: #818cf8;
     --max-width: 2400px;
@@ -92,7 +96,8 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
   /* Dark mode support out of the box */
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg-color: #000a20; /* Slate 900 */
+      --bg-color: #050910; 
+      --card-background: #050f21;
       --text-color: #f8fafc;
       --accent-color-1: #6672d9;
       --accent-color-2: #101a7a;
@@ -146,7 +151,7 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
   .logo {
     font-weight: 700;
     scale: 120%;
-    padding: 1%;
+    padding: 0.7% 1%;
     text-decoration: none;
     color: var(--text-color);
   }

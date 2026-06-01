@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/base.astro';
+import Desc_Box from '../../components/short_description_box.astro'
+
+---
+
+<BaseLayout>
+  <div class="main-frame">
+    <hr class = "line">
+
+    <div class = "heading-text">
+      <h1> Le mie partecipazioni alle Olimpiadi di informatica</h1>
+      <p style="padding-top:1rem">
+        In breve, dall'anno 2022/2023 ho avuto di competere a livello nazionale e internazionale alle Olimpiadi di informatica.
+
+        <br><br>
+
+        Nel corso degli ultimi quattro anni ho vinto: <br>
+        - due medaglie di argento e una d'oro alle OII (nazionali italiane) <br>
+        - tre medaglie d'argento e una d'oro alle EGOI (European Girls' Olympiad in Informatics, cioé olimpiadi internazionali femminili) <br>
+        - due medaglie di bronzo alle WEOI (Western European Olympiad in Informatics, cioé olimpiadi a livello europeo) <br>
+        Inoltre ho partecipato alle BOI (Balcan Olympiad in Informatics) e alle IOI (International Olympiad in Informatics) quest'ultima rappresentando il Lussemburgo, dove ho vinto le nazionali nel 2024.
+
+        <br><br>
+
+        Tuttavia ridurre la mia esperienza con queste competizioni ai soli risultati ottenuti a mio avviso non restituisce quello che è stata quest'esperienza per me, dunque cliccando i link qui sotto potete scoperire di più sulle diverse gare.
+      </p>
+    </div>
+    
+    <hr class = "line">
+
+    <div class="secondary-wrapper">
+        <Desc_Box link = '/olinfo/OII' img = '/code.jpg'>
+            <h3> Olimpiadi nazionali italiane </h3>
+        </Desc_Box>
+
+        <Desc_Box link = '/olinfo/Volterra' img = '/code.jpg'>
+            <h3> Percorso Proabili Olimpici </h3>
+        </Desc_Box>
+
+        <Desc_Box link = '/olinfo/EGOI' img = '/code.jpg'>
+            <h3> Olimpiadi femminili (europee) </h3>
+        </Desc_Box>
+
+        <Desc_Box link = '/olinfo/IOI&others' img = '/code.jpg'>
+            <h3> Altre gare </h3>
+        </Desc_Box>
+    </div>  
+  </div>
+  
+</BaseLayout>
+
+<style>
+  .main-frame {
+    padding: 3rem 4rem;
+    flex:1;
+  }
+
+  .secondary-wrapper {
+    padding: 3rem 0rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1rem;
+  }
+  
+  .heading-text {
+    align-items: center;
+    justify-self: center;
+    font-size: 20px;
+    padding: 2rem 2rem;
+  }
+
+  .line {
+    color: var(--accent-color-1)
+  }
+</style>
