@@ -1,0 +1,113 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="EGOI: Gare internazionali (con sede europea) per ragazze" subtitle="Ho partecipato rappresentando l'Italia per quattro edizioni di questa gara,
+     che ha come fine l'incoraggiamento della partecipazione femminile nella disciplina dell'informatica, dal 2023 al 2026.">
+
+    <div class="item-list">
+      
+        <Item title="EGOI 2023" date="Lund(SE), Luglio 2023" photo="/egoi2023_1.jpg">
+            La mia prima partecipazione alle EGOI è stata un'esperienza davvero indimenticabile.
+            Al termine dei due giorni di gara ho conquistato una medaglia d'argento, la prima per l'Italia.
+        </Item>
+
+        <Item title="EGOI 2024" date="Veldhoven(NE), Luglio 2024" photo="/egoi2024.jpg" dir="row-reverse">
+            Nel 2024 oltre al secondo argento ho avuto modo di vedere da vicino un ambiente universitario 
+            internazionale e innovativo come quello del TUe di Eindhoven.
+        </Item>
+
+        <Item title="EGOI 2025" date="Bonn(DE), Luglio 2025" photo="/egoi2025.jpg">
+            Anche nel 2025 siamo state ospitate da un'università importante a livello internazionale, 
+            soprattutto nell'ambito matematico e informatico, Uni-Bonn, e qui ho conquistato la mia terza medaglia d'argento.
+        </Item>
+
+        <Item title="EGOI 2026" date="Cesenatico, Maggio 2026" photo="/egoi2026.jpg" dir="row-reverse">
+            Quest'anno ho gareggiato in casa nella nota città marittima di Cesenatico. 
+            Qui, alla mia ultima partecipazione, ho vinto una medaglia d'oro, la prima per l'Italia a questa gara.
+        </Item>
+
+        <LinkCard 
+          link = "https://stats.egoi.org/people/476/" 
+          title = "Link al portale di statistiche delle EGOI" 
+          text = "Clicca qui per vedere i miei piazzamenti nei vari anni."
+          icon = "code"
+        />
+    </div>
+
+    <div class="gallery-section">
+      <hr class="gallery-divider" />
+      <div class="photo-grid">
+      </div>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .gallery-section {
+    margin-top: 5rem;
+    width: 100%;
+  }
+
+  .gallery-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(128, 128, 128, 0.15);
+    margin-bottom: 3rem;
+  }
+
+  .gallery-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .photo-grid {
+    column-count: 2;
+    column-gap: 1.5rem;
+    width: 100%;
+  }
+
+  .gallery-photo {
+    max-width: 800px;
+    height: 400px; /* Mantiene l'aspect ratio originale */
+    display: block;
+    border-radius: 12px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    break-inside: avoid; /* Evita che l'immagine venga divisa tra due colonne */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

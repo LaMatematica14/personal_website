@@ -5,11 +5,11 @@ import BaseLayout from '../layouts/base.astro';
 
 <BaseLayout title="Chi sono?" description="Mi presento">
     <div class="main-frame">
-        <img src="me.jpg" alt="Una foto di me" class="presentation-photo">
+        <img src="/me.jpg" alt="Una foto di me" class="presentation-photo">
         
         <div class="presentation-text"> 
             <p>
-                <b>Ciao!</b> 
+                <b>Buongiorno!</b> 
                 <br/><br/>
                 Sono Sofia Maragò, una studentessa liceale di 5a superiore.
                 <br/><br/>
@@ -24,26 +24,50 @@ import BaseLayout from '../layouts/base.astro';
 </BaseLayout>
 
 <style>
-    
-    .presentation-photo{
-        float: left;
-        margin-top: 40px;
-        margin-left: 14%;
-        width: 450px;
-    }
-
-    .presentation-text{
-        margin-top: 105px;
-        margin-right: 14%;
+    .main-frame {
+        display: flex;
+        flex-direction: row;
         align-items: center;
-        width: 600px;
-        float: right;
-        font-size: 18px;
+        justify-content: center;
+        gap: 6rem;
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex: 1;
     }
 
-    .main-frame{
-        padding: 5rem 4rem;
-        flex:1;
+    .presentation-photo {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        box-shadow: 
+            0 10px 25px -5px rgba(0, 0, 0, 0.1),
+            0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        object-fit: cover;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
-    
+
+    .presentation-text {
+        flex: 1;
+        max-width: 600px;
+        font-size: 1.125rem;
+        line-height: 1.8;
+    }
+
+    /* Responsiveness for tablets and mobile */
+    @media (max-width: 968px) {
+        .main-frame {
+            flex-direction: column;
+            gap: 2.5rem;
+            padding: 3rem 1.5rem;
+        }
+
+        .presentation-photo {
+            max-width: 320px;
+        }
+
+        .presentation-text {
+            font-size: 1.05rem;
+        }
+    }
 </style>

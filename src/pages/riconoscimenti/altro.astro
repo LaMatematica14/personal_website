@@ -1,0 +1,98 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+
+---
+
+<PageLayout title="Altri premi che ho ricevuto">
+    <hr>
+
+    <div class="item-list">
+      
+        <Item title="Premio per la matematica e l'informatica nelle scuole superiori della Banca d'Italia" date="Roma, Giugno 2025" photo="/banca_italia.jpg">
+            Questo premio monetario mi ha permesso di svolgere assieme agli altri 4 ragazzi premiati per la disciplina dell'informatica lo stage bisettimanale a Google Zurigo.
+        </Item>
+        <LinkCard 
+          link = "/fsl/google" 
+          title = "FSL a Google" 
+          text = "Clicca qui per saperne di più sulla mia esperienza a Google"
+          icon = "code"
+        />
+
+    </div>
+
+    <div class="gallery-section">
+      <hr class="gallery-divider" />
+      <div class="photo-grid">
+      </div>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .gallery-section {
+    margin-top: 5rem;
+    width: 100%;
+  }
+
+  .gallery-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(128, 128, 128, 0.15);
+    margin-bottom: 3rem;
+  }
+
+  .gallery-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .photo-grid {
+    column-count: 2;
+    column-gap: 1.5rem;
+    width: 100%;
+  }
+
+  .gallery-photo {
+    max-width: 800px;
+    height: 400px; /* Mantiene l'aspect ratio originale */
+    display: block;
+    border-radius: 12px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    break-inside: avoid; /* Evita che l'immagine venga divisa tra due colonne */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

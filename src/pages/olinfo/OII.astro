@@ -1,0 +1,113 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="Olimpiadi italiane di informatica: Gara nazionale italiana" subtitle="Ho partecipato a quattro edizioni della gara nazionale, dal 2022 al 2025.">
+    <div class="item-list">
+      
+        <Item title="OII 2022" date="Online, Settembre 2022" photo="/oii2022.jpg">
+            Ho svolto la mia prima nazionale di informatica in modo telematico essendomi 
+            qualificata con un percorso "side-track", la gara in presenza si è svolta a Biella. 
+            A seguito degli stage in questa edizione ho partecipato rappresentando l'Italia alle EGOI.
+        </Item>
+
+        <Item title="OII 2023" date="Bergamo, Ottobre 2023" photo="/oii2023.jpg" dir="row-reverse">
+            L'edizione successiva ho conquistato una medaglia d'argento classificandomi 13esima.
+            A seguito degli stage in questa edizione ho partecipato rappresentando l'Italia alle EGOI e alle WEOI.
+        </Item>
+
+        <Item title="OII 2024" date="Reggio Emilia, Settembre 2024" photo="/oii2024.jpg">
+            Nell'edizione del 2024 ho conquistato una medaglia d'oro in 5a posizione.
+            A seguito degli stage in questa edizione ho partecipato rappresentando l'Italia alle EGOI, alle WEOI e alle BOI.
+        </Item>
+
+        <Item title="OII 2025" date="Udine, Settembre 2025" photo="/oii2025.avif" dir="row-reverse">
+            L'edizione successiva ho conquistato una medaglia d'argento classificandomi 13esima.
+            A seguito degli stage in questa edizione parteciperò rappresentando l'Italia alle EGOI, alle WEOI, alle CEOI e 
+            alle prestigiose IOI.
+        </Item>
+
+        <LinkCard 
+          link = "https://stats.olinfo.it/contestant/44cedc6ce610cd6b43163846584d260d" 
+          title = "Link al portale di statistiche delle OII" 
+          text = "Clicca qui per vedere i miei piazzamenti nei vari anni."
+          icon = "code"
+        />
+    </div>
+
+    <div class="gallery-section">
+      <hr class="gallery-divider" />
+      <div class="photo-grid">
+      </div>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .gallery-section {
+    margin-top: 5rem;
+    width: 100%;
+  }
+
+  .gallery-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(128, 128, 128, 0.15);
+    margin-bottom: 3rem;
+  }
+
+  .gallery-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .photo-grid {
+    column-count: 2;
+    column-gap: 1.5rem;
+    width: 100%;
+  }
+
+  .gallery-photo {
+    max-width: 800px;
+    height: 400px; /* Mantiene l'aspect ratio originale */
+    display: block;
+    border-radius: 12px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    break-inside: avoid; /* Evita che l'immagine venga divisa tra due colonne */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

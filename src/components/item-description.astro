@@ -1,0 +1,91 @@
+---
+const { date } = Astro.props;
+const { photo } = Astro.props;
+const { title } = Astro.props;
+const {dir} = Astro.props;
+---
+
+<div class="item">
+    <div class="image-wrapper">
+        <img src={photo} alt= "Item photo" class="item-photo" />
+    </div>
+    <div class="content-wrapper">
+        <span class="item-date">{date}</span>
+        <h2>{title}</h2>
+        <p>
+        <slot/>
+        </p>
+    </div>
+</div>
+
+
+<style define:vars={{dir}}>
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+        flex-direction: var(--dir);
+    }
+
+    .image-wrapper {
+        flex: 1.1;
+    }
+
+    .item-photo {
+        display: flex;
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .item-date {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1rem;
+        color: var(--accent-color-1);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .content-wrapper {
+        flex: 1;
+        display: flex;
+        max-width: 520px;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+
+    .content-wrapper h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .content-wrapper p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
+
+    @media (max-width: 868px) {
+        .item, 
+        .item.alternate {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+        }
+
+        .item-photo {
+        height: 240px;
+        }
+
+        .content-wrapper h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.75rem;
+        }
+    }
+</style>

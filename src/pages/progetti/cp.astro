@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../../layouts/base.astro';
+---
+
+<BaseLayout title="I miei viaggi" description="Le foto e i racconti dei miei viaggi">
+  <div class="main-container">
+    <div class="intro-section">
+      <h1>I miei viaggi</h1>
+      <p>Una raccolta di foto, ricordi ed esperienze vissute esplorando nuovi posti nel mondo.</p>
+    </div>
+
+    <div class="travel-list">
+      <!-- Esempio 1 -->
+      <div class="travel-item">
+        <div class="image-wrapper">
+          <img src="/warszawa.jpg" alt="Varsavia" class="travel-photo" />
+        </div>
+        <div class="content-wrapper">
+          <span class="travel-date">Maggio 2026</span>
+          <h2>Varsavia, Polonia</h2>
+          <p>
+            Varsavia mi ha affascinato con il suo contrasto tra la ricostruzione storica meticolosa del centro storico (Stare Miasto) e i moderni grattacieli che definiscono il suo skyline in crescita. Una città ricca di storia, musei scientifici dedicati a grandi figure come Copernico e Maria Curie, ed enormi parchi verdi.
+          </p>
+        </div>
+      </div>
+
+      <!-- Esempio 2 -->
+      <div class="travel-item alternate">
+        <div class="image-wrapper">
+          <img src="/google_hq.jpg" alt="Zurigo" class="travel-photo" />
+        </div>
+        <div class="content-wrapper">
+          <span class="travel-date">Settembre 2025</span>
+          <h2>Zurigo, Svizzera</h2>
+          <p>
+            Visitare Zurigo è stata un'esperienza fantastica, non solo per la bellezza del lago e delle vie del centro storico, ma anche per la vivacità del suo panorama tecnologico. Qui ho avuto l'opportunità di esplorare la sede di Google e passeggiare lungo il fiume Limmat, scoprendo una città che unisce natura e innovazione in un modo straordinario.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    flex: 1;
+  }
+
+  .intro-section {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .intro-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .intro-section p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .travel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .travel-item {
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+  }
+
+  /* Alterna la disposizione delle foto */
+  .travel-item.alternate {
+    flex-direction: row-reverse;
+  }
+
+  .image-wrapper {
+    flex: 1.1;
+  }
+
+  .travel-photo {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .travel-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent-color-1);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .content-wrapper h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .content-wrapper p {
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  /* Responsive per schermi piccoli (tablet e mobile) */
+  @media (max-width: 868px) {
+    .main-container {
+      padding: 2.5rem 1.5rem;
+    }
+
+    .intro-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .travel-list {
+      gap: 3.5rem;
+    }
+
+    .travel-item, 
+    .travel-item.alternate {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.5rem;
+    }
+
+    .travel-photo {
+      height: 240px;
+    }
+
+    .content-wrapper h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+</style>

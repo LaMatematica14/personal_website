@@ -1,0 +1,96 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="Olimpiadi italiane di informatica: Gara nazionale italiana" subtitle="Ho partecipato a quattro edizioni della gara nazionale, dal 2022 al 2025.">
+    <div class="item-list">
+      
+        <Item title="WEOI e BOI" date="Giugno 2024, giugno 2025, settembre 2025" photo="/weoi.jpg">
+            Ho partecipato a gare internazionali di livello europeo come WEOI (due volte) e BOI (una volta) rappresentando l'Italia. 
+            Anche quest'anno ho in piano altre due gare europee, le WEOI e le CEOI.
+        </Item>
+
+        <Item title="IOI" date="Alessandria(EG), Settembre 2024" photo="/ioi_mascotte.jpg" dir="row-reverse">
+            Nel 2024 ho potuto partecipare anche alle Olimpiadi Internazionali di Informatica rappresentando il Lussemburgo, 
+            nel quale ho studiato durante l'anno scolastico 2023/2024. Inoltre, quest'anno mi sono qualificata per rappresentare l'Italia
+            alla stessa competizione, che si terrà ad agosto.  
+        </Item>
+
+    </div>
+
+    <div class="gallery-section">
+      <hr class="gallery-divider" />
+      <div class="photo-grid">
+      </div>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .gallery-section {
+    margin-top: 5rem;
+    width: 100%;
+  }
+
+  .gallery-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(128, 128, 128, 0.15);
+    margin-bottom: 3rem;
+  }
+
+  .gallery-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .photo-grid {
+    column-count: 2;
+    column-gap: 1.5rem;
+    width: 100%;
+  }
+
+  .gallery-photo {
+    max-width: 800px;
+    height: 400px; /* Mantiene l'aspect ratio originale */
+    display: block;
+    border-radius: 12px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+    break-inside: avoid; /* Evita che l'immagine venga divisa tra due colonne */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>
