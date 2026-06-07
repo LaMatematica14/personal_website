@@ -1,158 +1,94 @@
 ---
-import BaseLayout from '../../layouts/base.astro';
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import ItemVertical from '../../components/item-description-vertical.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
 ---
 
-<BaseLayout title="I miei viaggi" description="Le foto e i racconti dei miei viaggi">
-  <div class="main-container">
-    <div class="intro-section">
-      <h1>I miei viaggi</h1>
-      <p>Una raccolta di foto, ricordi ed esperienze vissute esplorando nuovi posti nel mondo.</p>
-    </div>
+<PageLayout title="Progetti nel contesto della programmazione competitiva" subtitle="Una raccolta dei lavori più interessanti che ho svolto nel contesto delle Olimpiadi di Informatica">
+    <div class="item-list">
+        <Item title="Soluzioni e commenti su problemi EGOI24" date="estate 2024" photo="/egoi2024.jpg">
+            Dopo aver partecipato alle EGOI nell'anno 2024, ho deciso di scrivere un compendio di soluzioni svolte e commentate ai problemi che mi sono trovata
+            in gara, a scopo principalmente autodidattico. Questo è anche stato il mio primo grande progetto in Latex e grazie ad esso ho approfondito la mia conoscenza
+            di questo formato di scrittura scientifica.
+        </Item>
+        <LinkCard 
+            link = "/SoluzioniEGOI24.pdf" 
+            title = "Link all'elaborato" 
+            text = "Clicca qui per vedere il compendio in formato pdf."
+            icon = "file_present"
+            target = "_blank"
+        />
 
-    <div class="travel-list">
-      <!-- Esempio 1 -->
-      <div class="travel-item">
-        <div class="image-wrapper">
-          <img src="/warszawa.jpg" alt="Varsavia" class="travel-photo" />
-        </div>
-        <div class="content-wrapper">
-          <span class="travel-date">Maggio 2026</span>
-          <h2>Varsavia, Polonia</h2>
-          <p>
-            Varsavia mi ha affascinato con il suo contrasto tra la ricostruzione storica meticolosa del centro storico (Stare Miasto) e i moderni grattacieli che definiscono il suo skyline in crescita. Una città ricca di storia, musei scientifici dedicati a grandi figure come Copernico e Maria Curie, ed enormi parchi verdi.
-          </p>
-        </div>
-      </div>
+        <ItemVertical title="Volontariato SWERC" date="Novembre 2025" photo="/palloncini_swerc.jpg" dir="row-reverse">
+            Quest'anno scolastico ho anche avuto modo di svolgere un'attività di volontariato nel constesto della gara a squadre di programmazione 
+            competitiva per università, le ICPC, in particolare per le Regional Finals dell'Europa sud-occidentale, le SWERC.
+            <br>
+            Quest'esperienza è stata per me molto formativa perché mi ha fatto conoscere da vicino i procedimenti dell'organizzazione
+             di un evento internazionale. I quattro giorni che ho trascorso all'università di Pisa per questo evento hanno anche avuto un valore orientativo
+            per me, essendo il dipartimento di matematica dell'università una delle mie scelte per la formazione terziaria.
+        </ItemVertical>
 
-      <!-- Esempio 2 -->
-      <div class="travel-item alternate">
-        <div class="image-wrapper">
-          <img src="/google_hq.jpg" alt="Zurigo" class="travel-photo" />
+        <br>
+
+        <Item title="Lezioni e gare del corso PreEGOI" date="Dicembre 2025 - Marzo 2026" photo="/logo.jpg">
+            Come da tradizione, essendo state le EGOI quest'anno organizzate in casa, l'Italia ha avuto la possibilità di portare una seconda squadra 
+            alla competizione. Ho partecipato al processo di preparazione e selezione di questa squadra, collaborando con staff delle Olimpiadi, 
+            tramite il progetto PreEGOI. Infatti ho tenuto alcune lezioni e ho preparato una parte dei problemi nelle gare di allenamento e selezione.
+        </Item>
+        <div class="cards-list">
+          <LinkCard 
+            link = "https://youtube.com/playlist?list=PLe45jMbg4-IR5zQYgg9CAA5GqbZokSUmn&si=1Js6VLirtq144_0X" 
+            title = "Video delle lezioni del corso" 
+            text = "Clicca qui per trovare le mie lezioni del corso PreEGOI sul canale Youtube di ANPC (Associazione Nazionale Programmazione Competitiva)."
+            icon = "video_library"
+            target = "_blank"
+          />
+
+          <LinkCard 
+            link = "https://drive.google.com/drive/folders/1RxRqeXqGOmDbaNaGJQ47ZksEqbm7JuBM?usp=drive_link" 
+            title = "Testi dei problemi di gara" 
+            text = "Clicca qui per scoprire i problemi della gara finale di selezione della squadra italiana EGOI26."
+            icon = "file_present"
+            target = "_blank"
+          />
         </div>
-        <div class="content-wrapper">
-          <span class="travel-date">Settembre 2025</span>
-          <h2>Zurigo, Svizzera</h2>
-          <p>
-            Visitare Zurigo è stata un'esperienza fantastica, non solo per la bellezza del lago e delle vie del centro storico, ma anche per la vivacità del suo panorama tecnologico. Qui ho avuto l'opportunità di esplorare la sede di Google e passeggiare lungo il fiume Limmat, scoprendo una città che unisce natura e innovazione in un modo straordinario.
-          </p>
-        </div>
-      </div>
     </div>
-  </div>
-</BaseLayout>
+</PageLayout>
 
 <style>
-  .main-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    flex: 1;
-  }
-
-  .intro-section {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .intro-section h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .intro-section p {
-    font-size: 1.1rem;
-    opacity: 0.8;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .travel-list {
+  .item-list {
+    margin: 4rem;
     display: flex;
     flex-direction: column;
     gap: 5rem;
   }
 
-  .travel-item {
-    display: flex;
-    align-items: center;
-    gap: 3.5rem;
-  }
-
-  /* Alterna la disposizione delle foto */
-  .travel-item.alternate {
-    flex-direction: row-reverse;
-  }
-
-  .image-wrapper {
-    flex: 1.1;
-  }
-
-  .travel-photo {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  .content-wrapper {
-    flex: 1;
+  .cards-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 0.85rem;
   }
 
-  .travel-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--accent-color-1);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
 
-  .content-wrapper h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  .content-wrapper p {
-    font-size: 1rem;
-    line-height: 1.7;
-    opacity: 0.9;
-  }
-
-  /* Responsive per schermi piccoli (tablet e mobile) */
   @media (max-width: 868px) {
-    .main-container {
-      padding: 2.5rem 1.5rem;
+
+    .gallery-section {
+      margin-top: 3.5rem;
     }
 
-    .intro-section {
-      margin-bottom: 2.5rem;
+    .gallery-divider {
+      margin-bottom: 2rem;
     }
 
-    .travel-list {
-      gap: 3.5rem;
-    }
-
-    .travel-item, 
-    .travel-item.alternate {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1.5rem;
-    }
-
-    .travel-photo {
-      height: 240px;
-    }
-
-    .content-wrapper h2 {
+    .gallery-section h2 {
       font-size: 1.4rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
     }
   }
 </style>

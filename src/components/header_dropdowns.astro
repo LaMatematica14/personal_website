@@ -2,11 +2,12 @@
 const { title } = Astro.props;
 const { main_page } = Astro.props;
 const { options } = Astro.props;
+const {target = '_self'} = Astro.props;
 ---
 
 <div class="dropdown">
     <span class="dropdown-trigger">
-        <b> <a href={main_page}> {title} </a> </b> 
+        <b> <a href={main_page} target={target}> {title} </a> </b> 
     </span>
     <div class="dropdown-menu">  
     {options.map(item => (

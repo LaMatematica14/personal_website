@@ -1,0 +1,90 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="Il progetto F1 in Schools" subtitle="Resoconto della mia esperienza assieme alla squadra Photon Racing di modellini F1 da rettilineo.">
+    <div class="item-list">
+      
+        <Item title="Progetto F1 in Schools" date="a.s. 2024/2025" photo="/f1inschools.jpg">
+            Il progetto F1inSchools, ora STEM Racing, consiste in una competizione svolta in squadre titolari da 6 componenti 
+            dove l'obiettivo è creare un modello di azienda di macchine da corsa combinando l'aspetto ingegneristico, l'aspetto di marketing 
+            e quello gestionale.
+        </Item>
+
+        <Item title="Photon Racing" date="La nostra squadra" photo="/photon_racing.jpg" dir="row-reverse">
+            La nostra squadra si ispirava alla passione per le materie scientifiche teoriche, soprattutto la fisica applicate
+            nel pratico del nostro modellino di vettura. All'interno della squadra il mio ruolo era quello di "graphic designer" dunque 
+            mi occupavo soprattutto dell'aspetto visivo e d'immagine della squadra.
+        </Item>
+
+        <Item title="Il nostro percorso" date="Dalla qualifica alle Nazionali" photo="/regionals.jpg">
+            Abbiamo iniziato a lavorare come team per la qualifica già dall'inizio dell'anno. Purtroppo quest'ultima non è andata come speravamo e
+            ci siamo qualificati ai regionali solo nel ripescaggio B. Abbiamo però imparato molto dai nostri errori e con una grande rimonta abbiamo 
+            vinto la qualifica regionale (oltre che il premio per il project management) e dunque conquistato un posto alla nazionale.
+        </Item>
+
+        <Item title="Le nazionali a Maranello" date="La conclusione dell'esperienza" photo="/nationals.jpg" dir="row-reverse">
+            Il nostro percorso si è concluso con l'impegnativa gara nazionale a Maranello, in sede Ferrari. Qui, presentando il nostro "pit display", 
+            i nostri "portfolio" e chiaramente facendo gareggiare la nostra vettura, ci siamo aggiudicati il 7mo posto nazionale. Questo percorso è stato 
+            per me particolarmente formativo in quanto il mio ruolo in squadra mi ha portato fuori dalla mia "comfort zone" e dentro una realtà
+            professionale che ho sperimentato per la prima volta da vicino.
+        </Item>
+
+        <div class="cards-list">
+            <LinkCard 
+                link = "https://drive.google.com/drive/folders/1EXTOz_cJyPCk0zZiRwQFMrHt9Qn9Ify-?usp=drive_link" 
+                title = "Link alla cartella Drive dei portfolio" 
+                text = "Clicca qui per vedere la nostra presentazione ufficiale della squadra davanti ai giudici alla nazionale."
+                icon = "sports_motorsports"
+                target = "_blank"
+            />
+            <LinkCard 
+                link = "/Photon Racing Team - Presentazione.pdf" 
+                title = "Link alla nostra presentazione prima delle nazionali" 
+                text = "Clicca qui per vedere la nostra presentazione finalizzata alla ricerca di sponsorship nelle aziende."
+                icon = "file_present"
+                target = "_blank"
+            />
+        </div>
+        
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const { 
-  title = "LaMatematica14 si presenta", 
+  title = "Sofia Maragò", 
   description = "Welcome to my personal corner of the internet." 
 } = Astro.props;
 
@@ -45,15 +45,14 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
               options = {[
                 { label: 'Programmazione competitiva', url: '/progetti/cp' },
                 { label: 'F1inSchools', url: '/progetti/f1inschools' },
-                { label: 'SWERC', url: '/progetti/swerc' },
                 { label: 'Scolastici', url: '/progetti/scolastici' },
-                { label: 'Musica', url: '/progetti/arte'}
+                { label: 'Musica e arti', url: '/progetti/arte'}
               ]}
             />
 
             <HeaderDropdowns title="FSL" main_page = '/fsl/intro'
               options={[
-                { label: 'Presentazione', url: '/fsl/presentazione' },
+                { label: 'Presentazione', url: '/PresentazioneFSL.pdf', target: '_blank'},
                 { label: 'Stage Google', url: '/fsl#google' },
                 { label: 'EGMO Camp', url: '/fsl#egmo_camp' },
                 { label: 'Stage di matematica e fisica', url: '/fsl#aif_e_mathesis' },

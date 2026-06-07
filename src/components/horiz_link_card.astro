@@ -3,9 +3,10 @@ const { link } = Astro.props;
 const { icon } = Astro.props;
 const { title } = Astro.props;
 const { text } = Astro.props;
+const { target = "_self"} = Astro.props;
 ---
 
-<a href= { link } class="link-card" target="_blank" rel="noopener noreferrer">
+<a href= { link } class="link-card" target= {target} rel="noopener noreferrer">
     <div class="card-icon">
     <i class="material-icons">{icon}</i>
     </div>
