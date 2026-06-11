@@ -79,6 +79,64 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
         <p>&copy; {new Date().getFullYear()} — Built with Astro</p>
       </footer>
     </div>
+
+    <script>
+      function adjustLinks() {
+        const links = document.querySelectorAll('a');
+        const currentHost = window.location.host;
+
+        links.forEach(link => {
+          const href = link.getAttribute('href');
+          if (!href) return;
+
+          let isInternal = false;
+          try {
+            const url = new URL(href, window.location.href);
+            if (url.host === currentHost) {
+              isInternal = true;
+            }
+          } catch (e) {
+            if (href.startsWith('/') || href.startsWith('.') || href.startsWith('#') || href.startsWith('?')) {
+              isInternal = true;
+            } else if (href.includes(':') || href.startsWith('//')) {
+              isInternal = false;
+            } else {
+              isInternal = true;
+            }
+          }
+
+          // A page in the website: HTML pages.
+          // Non-HTML files (like PDF documents, images) are not pages, so they should open in a different tab.
+          if (isInternal) {
+            const pathParts = href.split('?')[0].split('#')[0].split('/');
+            const lastPart = pathParts[pathParts.length - 1];
+            if (lastPart.includes('.')) {
+              const ext = lastPart.split('.').pop().toLowerCase();
+              const pageExtensions = ['html', 'htm', 'php', 'asp', 'aspx', 'jsp'];
+              if (!pageExtensions.includes(ext)) {
+                isInternal = false;
+              }
+            }
+          }
+
+          if (isInternal) {
+            link.removeAttribute('target');
+          } else {
+            // For mailto: and tel: links, target="_blank" is undesirable.
+            if (!href.startsWith('mailto:') && !href.startsWith('tel:')) {
+              link.setAttribute('target', '_blank');
+              const rel = link.getAttribute('rel') || '';
+              if (!rel.includes('noopener')) {
+                link.setAttribute('rel', (rel + ' noopener').trim());
+              }
+            }
+          }
+        });
+      }
+
+      // Run on initial load
+      adjustLinks();
+    </script>
   </body>
 </html>
 

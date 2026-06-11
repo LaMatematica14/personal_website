@@ -31,13 +31,17 @@ const {dir} = Astro.props;
     }
 
     .image-wrapper {
-        flex: 0.9;
+        flex: 0.5;
+        display: flex;
+        justify-content: center;
     }
 
     .item-photo {
-        display: flex;
-        width: 400px;
-        height: 100%;
+        display: block;
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        aspect-ratio: 3/4;
         object-fit: cover;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -54,7 +58,7 @@ const {dir} = Astro.props;
     }
 
     .content-wrapper {
-        flex: 1;
+        flex: 1.5;
         display: flex;
         max-width: 920px;
         flex-direction: column;
@@ -78,12 +82,15 @@ const {dir} = Astro.props;
         .item, 
         .item.alternate {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         gap: 1.5rem;
         }
 
         .item-photo {
-        height: 240px;
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 3/4;
         }
 
         .content-wrapper h2 {
