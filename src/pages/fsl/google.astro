@@ -1,0 +1,85 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="Stage Google a Zurigo (CH)" 
+    subtitle="Resoconto della mia esperienza durante lo stage bisettimanale di ricerca in collaborazione con il gruppo Paradigms of Intelligence.">
+
+    <div class="item-list">
+      
+        <Item title="Le premesse dello stage" date="agosto 2025, Zurich(CH)" photo="/google_hq.jpg">
+            Durante l'estate 2025 ho avuto modo di svolgere uno stage di due settimane a Google assieme ad altri 4 studenti delle scuola superiori
+            in Italia, grazie al premio Banca d'Italia, un accompagnatore e altri 5 studenti svizzeri.
+        </Item>
+
+        <Item title="Reti neurali di gate binari allenabili" date="Il nostro progetto" photo="/google_presentation.png" dir="row-reverse">
+            Lo stage consisteva nell'addentrarsi in un argomento di ricerca a scelta, nel mio caso la creazione e l'allenamento di una rete neurale 
+            composta da gate logici e ottimizzata per classificazione di immagini (partendo dalla risoluzione del set MNIST).
+        </Item>
+
+        <Item title="Ricerca, implementazione e collaborazione" date="Il lavoro svolto" photo="/google_people.png">
+            La mia squadra di lavoro per il progetto era composta da 4 persone, insieme abbiamo trovato e implementato approcci innovativi al problema,
+            elaborando alla fine del percorso una presentazione al team che ci seguiva dei risultati da noi ottenuti. 
+            <br>
+            Speriamo inoltre di poter continuare a lavorare a questo progetto anche quest'anno, possibilmente in vista della pubblicazione di un articolo
+            scientifico. 
+        </Item>
+
+        <div class="cards-list">
+            <LinkCard 
+                link = "/Practical_Implementation_of_Deep_Differentiable_Logic_Gate_Networks__Design_and_Benchmarks.pdf" 
+                title = "Link alla presentazione coclusiva del progetto" 
+                text = "Clicca qui per vedere la nostra presentazione riassuntiva per la squadra Paradigms of Intelligence."
+                icon = "file_present"
+                target = "_blank"
+            />
+            <LinkCard 
+                link = "https://github.com/paradigms-of-intelligence/cs-olympiads-student-projects/tree/main/circuit" 
+                title = "Link al nostro codice" 
+                text = "Clicca qui per vedere la repository su GitHub del nostro progetto e consultare il nostro modello di rete neurale."
+                icon = "code"
+                target = "_blank"
+            />
+        </div>
+        
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

@@ -24,7 +24,7 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
     
     <!-- Primary Meta Tags -->
     <title>{title}</title>
-    <meta name="title" content={title} />
+    <meta name="title" content= {title} />
     <meta name="description" content={description} />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
@@ -53,10 +53,10 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
             <HeaderDropdowns title="FSL" main_page = '/fsl/intro'
               options={[
                 { label: 'Presentazione', url: '/PresentazioneFSL.pdf', target: '_blank'},
-                { label: 'Stage Google', url: '/fsl#google' },
-                { label: 'EGMO Camp', url: '/fsl#egmo_camp' },
-                { label: 'Stage di matematica e fisica', url: '/fsl#aif_e_mathesis' },
-                { label: 'A scuola', url: '/fsl#scolastici' }
+                { label: 'Stage Google', url: '/fsl/google' },
+                { label: 'EGMO Camp', url: '/fsl/egmo_camp' },
+                { label: 'Stage di matematica e fisica', url: '/fsl/aif_e_mathesis' },
+                { label: 'A scuola', url: '/fsl/scolastici' }
               ]} 
             />
 
