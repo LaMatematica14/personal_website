@@ -1,0 +1,61 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="EGMOCamp - matematica olimpica tra ragazze" 
+    subtitle="Vi racconto la mia esperienza nelle due edizioni che ho svolto dell'EGMOCamp, organizzato dalle Olimpiadi di Matematica">
+
+    <div class="item-list">
+        <Item title="Lo stage" date="Pisa, novembre 2024 e 2025" photo="/egmocamp.png">
+            L'EGMOCamp non è solo uno stage dedicato alla selezione e preparazione della squadra italiana delle EGMO (che negli ultimi anni ha però riscosso
+            grandi successi anche grazie ad esso), è infatti anche un'opportunità di conoscere da vicino l'ambiente olimpico e quello della Scuola Normale Superiore,
+             dove si svolgono gran parte delle lezioni, e tale lo è stato anche per me.
+        </Item>
+
+        <Item title="Le lezioni e i test" date="Qual è stato il lavoro svolto" photo="/pagina_mate.jpg" dir="row-reverse">
+            Durante le quattro giornate di corso si svolgono lezioni da 4 ore, una per ogni materia fondamentale della matematica, dunque algebra, teoria dei numeri,
+            combinatoria e geometria, su tre diversi livelli. Nei due anni in cui ho seguito questo stage ho assistito alle lezioni del "Medium" che si concentrano su
+            argomenti teorici imortanti, e "Advanced", più operative dove vengono presentati alle esercitazioni problemi di livello internazionale. Infine l'ultimo giorno 
+            si ha un test di selezione il cui punteggio è fondamentale per determinare la squadra EGMO.
+        </Item>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>

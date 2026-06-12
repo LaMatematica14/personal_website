@@ -4,18 +4,29 @@ import Item from '../../components/item-description.astro'
 import LinkCard from '../../components/horiz_link_card.astro'
 ---
 
-<PageLayout title="" subtitle="">
+<PageLayout title="Musica e altre espressioni artistiche" subtitle="Vi racconto alcuni progetti legati alle mie passioni più artistiche, 
+  come la musica (in particolare lo studio del flauto traverso dal percorso delle medie musicali) e la danza (che è stata una componente fondamentale della 
+  mia vita fin dalla tenera età)">
     <div class="item-list">
-        <Item title="" date="" photo="/image.jpg">
-
+        <Item title="Dialogo Angelico - Goffredo Petrassi" date="A.S. 2025/2026" photo="/flute.jpg">
+          Nell'ultimo anno mi sono dedicata allo studio di questo brano contemporaneo che mi ha fatto scoprire nuove tecniche espressive
+          dello strumento e a curare i dettagli di timbro e fraseggio. Si tratta di un duetto dall'atmosfera eterea e quasi spettrale, a volte
+          fredda, altre concitata.
         </Item>
         <LinkCard 
-            link = "/https://github.com/LaMatematica14/Chess" 
-            title = "Link all'elaborato" 
-            text = "Clicca qui per vedere il mio codice su GitHub."
+            link = "/dialogo_angelico.mp3" 
+            title = "Link alla registrazione eseguita in data 04.06.2026" 
+            text = "Clicca qui ascoltare la mia esecuzione di questo brano accompagnata dalla mia insegnante di flauto."
             icon = "code"
             target = "_blank"
         />
+    </div>
+
+    <div class="item-list">
+        <Item title="Danza classica e contemporanea" date="una passione che coltivo da tempo" photo="/danza.JPG" dir="row-reverse">
+          Strettamente legata anch'essa con la musica, la danza per me è sempre stata un elemento importante della mia vita, aiutandomi
+          spesso nella gestione delle mie emozioni e nel superare periodi più difficili.
+        </Item>
     </div>
 </PageLayout>
 

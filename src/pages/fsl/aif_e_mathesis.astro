@@ -1,0 +1,60 @@
+---
+import PageLayout from '../../layouts/pages.astro';
+import Item from '../../components/item-description.astro'
+import LinkCard from '../../components/horiz_link_card.astro'
+---
+
+<PageLayout title="Stage di matematica e fisica" 
+    subtitle="Vi racconto gli stage di matematica di Mathesis e fisica dell'AIF a cui ho partecipato in quarta e quinta">
+
+    <div class="item-list">
+        <Item title="Introduzione alla fisica quantistica" date="Gressoney-Saint-Jean(AO), marzo 2025" photo="/fisica_ottica.jpg" dir="row-reverse">
+            Durante i tre giorni di stage di fisica di quest'anno ho avuto modo di addentrarmi nei paradossi e nelle dualità della fisica quantistica.
+            Lo stage, in cui i momenti di approfondimento della materia escono anche dagli schemi delle lezioni nei momenti di svago e le conversazioni a tavola,
+            mi ha permesso di conoscere questa branca della fisica oltre quello che abbiamo trattato in classe e di farmi avvicinare alla materia.
+        </Item>
+
+        <Item title="Spazi non euclidei" date="Bardonecchia(TO), maggio 2025" photo="/bardonecchia.jpg">
+            Lo stage di matematica che ogni anno si svolge al Villaggio Olimpico di Bardonecchia ha premesse simili, si tratta anche qui di conoscere un
+            ambito della materia raramente affrontato in classe con metodo coinvolgente e alternativo. Il programma di questo stage per la classe quarta
+            coinvolge la curvatura dello spazio, argomento molto importante per i recenti sviluppi anche in altre materie come la fisica.
+        </Item>
+    </div>
+</PageLayout>
+
+<style>
+  .item-list {
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+
+  @media (max-width: 868px) {
+
+    .gallery-section {
+      margin-top: 3.5rem;
+    }
+
+    .gallery-divider {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      column-count: 1; /* Su mobile le foto vanno in un'unica colonna */
+      column-gap: 0;
+    }
+  }
+</style>
