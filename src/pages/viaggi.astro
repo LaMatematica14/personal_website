@@ -1,0 +1,1950 @@
+---
+import BaseLayout from '../layouts/base.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Database of travel locations
+const citiesData = [
+  {
+    id: "zurigo",
+    name: "Zurigo",
+    country: "Svizzera",
+    date: "Agosto - Settembre 2025",
+    x: 425.03,
+    y: 404.68,
+    description: "Stage di ricerca bisettimanale presso la sede di Google Zurigo. Ho lavorato a un progetto di ricerca in ambito informatico e vissuto un'esperienza immersiva in un ambiente tecnologico internazionale.",
+    photos: ["/google_hq.jpg", "/google_people.png", "/google_presentation.png"]
+  },
+  {
+    id: "lund",
+    name: "Lund",
+    country: "Svezia",
+    date: "Luglio 2023",
+    x: 435.82,
+    y: 375.28,
+    description: "EGOI 2023. La mia prima Olimpiade Femminile Europea di Informatica, dove ho conquistato una medaglia d'argento (la prima storica per l'Italia) al termine dei due giorni di gara.",
+    photos: ["/egoi2023_1.jpg"]
+  },
+  {
+    id: "veldhoven",
+    name: "Veldhoven / Eindhoven",
+    country: "Paesi Bassi",
+    date: "Luglio 2024",
+    x: 417.76,
+    y: 391.42,
+    description: "EGOI 2024. Seconda partecipazione all'Olimpiade Femminile Europea di Informatica, conclusasi con un'altra medaglia d'argento e l'opportunità di visitare da vicino il campus del TU Eindhoven.",
+    photos: ["/egoi2024.jpg"]
+  },
+  {
+    id: "bonn",
+    name: "Bonn",
+    country: "Germania",
+    date: "Luglio 2025",
+    x: 421.68,
+    y: 393.76,
+    description: "EGOI 2025. Terza partecipazione e terza medaglia d'argento alle Olimpiadi Femminili Europee di Informatica, ospitata dalla prestigiosa Università di Bonn (Uni-Bonn) nota a livello internazionale in ambito matematico.",
+    photos: ["/egoi2025.jpg"]
+  },
+  {
+    id: "cesenatico",
+    name: "Cesenatico",
+    country: "Italia",
+    date: "Maggio 2026",
+    x: 433.99,
+    y: 414.10,
+    description: "EGOI 2026. Quarta e ultima partecipazione gareggiando in casa nella nota località marittima di Cesenatico. Ho vinto una medaglia d'oro, la prima in assoluto per l'Italia in questa competizione.",
+    photos: ["/egoi2026.jpg"]
+  },
+  {
+    id: "alessandria",
+    name: "Alessandria",
+    country: "Egitto",
+    date: "Settembre 2024",
+    x: 474.64,
+    y: 450.58,
+    description: "IOI 2024. Partecipazione alle Olimpiadi Internazionali di Informatica rappresentando la squadra del Lussemburgo, nel quale ho studiato durante l'anno scolastico 2023/24.",
+    photos: ["/ioi_mascotte.jpg"]
+  },
+  {
+    id: "lussemburgo",
+    name: "Lussemburgo",
+    country: "Lussemburgo",
+    date: "A.S. 2023/2024",
+    x: 420.43,
+    y: 397.56,
+    description: "Un anno scolastico trascorso all'estero studiando in Lussemburgo, che mi ha permesso di arricchire il mio percorso accademico, conoscere una nuova cultura e qualificarmi per le IOI 2024.",
+    photos: ["/code.jpg"]
+  },
+  {
+    id: "senigallia",
+    name: "Senigallia",
+    country: "Italia",
+    date: "Aprile 2026",
+    x: 435.75,
+    y: 415.57,
+    description: "Gara Nazionale delle Olimpiadi di Fisica. Ho affrontato la Gara Nazionale a Senigallia, strutturata su due giorni (una prova teorica di tre problemi e una prova sperimentale in laboratorio) e ho ricevuto una medaglia di bronzo.",
+    photos: ["/senigallia.jpg"]
+  },
+  {
+    id: "pisa",
+    name: "Pisa",
+    country: "Italia",
+    date: "Novembre 2024 e 2025",
+    x: 429.35,
+    y: 415.45,
+    description: "Partecipazione all'EGMOCamp presso la Scuola Normale Superiore, uno stage intensivo di preparazione e selezione della squadra italiana per le Olimpiadi Femminili Europee di Matematica (EGMO).",
+    photos: ["/egmocamp.png"]
+  },
+  {
+    id: "gressoney",
+    name: "Gressoney-Saint-Jean",
+    country: "Italia",
+    date: "Marzo 2025",
+    x: 423.37,
+    y: 409.52,
+    description: "Stage di fisica dell'AIF focalizzato sull'introduzione alla fisica quantistica, tra studio intensivo, approfondimenti e confronti stimolanti in alta montagna.",
+    photos: ["/fisica_ottica.jpg"]
+  },
+  {
+    id: "bardonecchia",
+    name: "Bardonecchia",
+    country: "Italia",
+    date: "Maggio 2025",
+    x: 422.76,
+    y: 411.37,
+    description: "Stage di matematica di Mathesis dedicato agli spazi non euclidei e alla curvatura dello spazio presso il Villaggio Olimpico di Bardonecchia.",
+    photos: ["/bardonecchia.jpg"]
+  },
+  {
+    id: "volterra",
+    name: "Volterra",
+    country: "Italia",
+    date: "2022 - 2025",
+    x: 430.41,
+    y: 416.35,
+    description: "Stage per i Probabili Olimpici (PO) organizzati dalle Olimpiadi di Informatica a Volterra per selezionare e preparare le squadre internazionali. Un percorso di stage e gare in presenza impegnativo ma altamente formativo.",
+    photos: ["/volterra.jpg"]
+  },
+  {
+    id: "bergamo",
+    name: "Bergamo",
+    country: "Italia",
+    date: "Ottobre 2023",
+    x: 427.67,
+    y: 409.75,
+    description: "Olimpiadi Italiane di Informatica (OII 2023), svoltasi a Bergamo, dove ho conquistato una medaglia d'argento classificandomi 13esima nazionale.",
+    photos: ["/oii2023.jpg"]
+  },
+  {
+    id: "reggio_emilia",
+    name: "Reggio Emilia",
+    country: "Italia",
+    date: "Settembre 2024",
+    x: 429.88,
+    y: 412.67,
+    description: "Olimpiadi Italiane di Informatica (OII 2024), svoltasi a Reggio Emilia. Ho conquistato una medaglia d'oro posizionandomi al 5° posto nazionale.",
+    photos: ["/oii2024.jpg"]
+  },
+  {
+    id: "udine",
+    name: "Udine",
+    country: "Italia",
+    date: "Settembre 2025",
+    x: 435.95,
+    y: 408.64,
+    description: "Olimpiadi Italiane di Informatica (OII 2025), tenutasi a Udine. Ho conquistato una medaglia d'argento posizionandomi in 13esima posizione.",
+    photos: ["/oii2025.avif"]
+  },
+  {
+    id: "londra",
+    name: "Londra",
+    country: "Regno Unito",
+    date: "Giugno 2024",
+    x: 404.92,
+    y: 390.28,
+    description: "Western European Olympiad in Informatics (WEOI 2024). Partecipazione alla prima storica edizione delle Olimpiadi dell'Europa Occidentale di Informatica svoltasi a Londra, rappresentando l'Italia.",
+    photos: ["/weoi.jpg"]
+  },
+  {
+    id: "varsavia",
+    name: "Varsavia",
+    country: "Polonia",
+    date: "Molte volte",
+    x: 453.98,
+    y: 387.83,
+    description: "Visite frequenti a Varsavia, una città a cui sono molto legata a causa delle mie radici familiari, essendo per metà polacca.",
+    photos: ["/warszawa.jpg"]
+  },
+  {
+    id: "barcellona",
+    name: "Barcellona",
+    country: "Spagna",
+    date: "Primavera 2026",
+    x: 410.26,
+    y: 421.11,
+    description: "Gita scolastica di quinta liceo. Un viaggio indimenticabile a Barcellona per festeggiare la fine del percorso scolastico, tra arte, cultura e momenti di condivisione con i compagni di classe.",
+    photos: ["/barcellona.png"]
+  },
+  {
+    id: "catania",
+    name: "Catania",
+    country: "Italia",
+    date: "Primavera 2025",
+    x: 440.20,
+    y: 431.65,
+    description: "Gita scolastica di quarta liceo a Catania, alla scoperta delle bellezze storiche e naturali della Sicilia e dell'Etna.",
+    photos: ["/catania.png"]
+  },
+  {
+    id: "cracovia",
+    name: "Cracovia",
+    country: "Polonia",
+    date: "Primavera 2025",
+    x: 451.50,
+    y: 395.05,
+    description: "Viaggio della memoria a Cracovia. Abbiamo visitato il campo di concentramento di Auschwitz e i ghetti ebraici, un'esperienza profondamente toccante e riflessiva che mi ha segnato profondamente.",
+    photos: ["/cracovia.png"]
+  }
+];
+
+// Load SVG content at build-time
+const svgPath = path.resolve('public/world-map.svg');
+let svgContent = '';
+try {
+  svgContent = fs.readFileSync(svgPath, 'utf-8');
+  // Clean up XML header, DOCTYPE and title if present to prevent native tooltips
+  svgContent = svgContent.replace(/<\?xml[^>]*\?>/g, '');
+  svgContent = svgContent.replace(/<!DOCTYPE[^>]*>/g, '');
+  svgContent = svgContent.replace(/<title>[^<]*<\/title>/g, '');
+} catch (e) {
+  console.error("Errore nel caricamento della mappa SVG:", e);
+}
+
+// Inject pins directly inside the SVG element before the closing tag </svg>
+const pinsHtml = citiesData.map(city => `
+  <g class="pin" id="pin-${city.id}" data-id="${city.id}" data-x="${city.x}" data-y="${city.y}" data-name="${city.name}" transform="translate(${city.x}, ${city.y})">
+    <circle r="15" fill="transparent" class="pin-touch-target" />
+    <circle r="2.2" class="pin-dot" />
+  </g>
+`).join('');
+
+svgContent = svgContent.replace('</svg>', `${pinsHtml}</svg>`);
+---
+
+<BaseLayout title="I miei viaggi - Sofia Maragò" description="Mappa interattiva dei miei viaggi, stage ed esperienze di studio all'estero.">
+  <div class="main-container">
+    <div class="intro-section">
+      <h1>I miei viaggi</h1>
+      <p>Una mappa interattiva dei luoghi che ho visitato per gare, stage ed esperienze di studio. Clicca sui punti per scoprire i dettagli.</p>
+    </div>
+
+    <div class="map-section">
+      <div class="focus-bar">
+        <span class="focus-label">Focalizza area:</span>
+        <button class="focus-btn" data-focus="world">Mondo</button>
+        <button class="focus-btn" data-focus="europe">Europa</button>
+        <button class="focus-btn" data-focus="italy">Italia</button>
+      </div>
+
+      <div class="map-viewport-wrapper">
+        <div class="map-viewport" id="map-viewport">
+          <!-- Zoom Buttons -->
+          <div class="zoom-controls">
+            <button class="zoom-btn" id="zoom-in" title="Ingrandisci">+</button>
+            <button class="zoom-btn" id="zoom-out" title="Rimpicciolisci">-</button>
+            <button class="zoom-btn" id="zoom-reset" title="Ripristina vista">
+              <i class="material-icons">refresh</i>
+            </button>
+          </div>
+
+          <!-- Map Pan & Zoom Container -->
+          <div class="map-pan-zoom-container" id="map-container">
+            <div set:html={svgContent} class="world-map-svg-wrapper" />
+          </div>
+
+          <!-- Floating Trip Details Card -->
+          <div class="trip-details-card" id="trip-card">
+            <button class="close-card-btn" id="close-card" title="Chiudi scheda">&times;</button>
+            <div class="trip-card-content" id="trip-card-content">
+              <div class="select-hint">
+                <div class="select-hint-icon-wrapper">
+                  <i class="material-icons select-hint-icon">explore</i>
+                </div>
+                <h3 class="select-hint-title">Esplora i viaggi</h3>
+                <p class="select-hint-text">Clicca su uno stato o su una città evidenziata per visualizzare i dettagli dei miei viaggi e le foto.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML Tooltip for city hover -->
+          <div class="map-tooltip" id="map-tooltip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Screen Lightbox Modal for Photo Click Zoom -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="Anteprima ingrandita" />
+  </div>
+
+</BaseLayout>
+
+<style>
+  .main-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 3rem 0 5rem 0; /* Removed horizontal padding for edge-to-edge layout */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro-section {
+    text-align: center;
+    margin: 0 auto 2rem auto;
+    max-width: 1200px;
+    padding: 0 2rem;
+  }
+
+  .intro-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .intro-section p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  .map-section {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Focus area buttons style */
+  .focus-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 auto 1.5rem auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    padding: 0 2rem;
+  }
+
+  .focus-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  .focus-btn {
+    background: transparent;
+    border: 1.5px solid var(--accent-color-1);
+    color: var(--text-color);
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .focus-btn:hover {
+    background: var(--accent-color-1);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.25);
+  }
+
+  .focus-btn.active {
+    background: var(--accent-color-1);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.3);
+  }
+
+  /* Viewport and Map styling */
+  .map-viewport-wrapper {
+    width: calc(100% - 4rem);
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid rgba(128, 128, 128, 0.18);
+    background-color: var(--bg-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    max-height: 75vh; /* Capped to 75% of viewport height */
+    min-height: 550px; /* Enhanced minimum height */
+  }
+
+  .map-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .map-viewport:active {
+    cursor: grabbing;
+  }
+
+  /* Panning and Zooming Inner container */
+  .map-pan-zoom-container {
+    width: 784.077px;
+    height: 458.627px;
+    position: relative;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+
+  .world-map-svg-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* SVG map elements styles */
+  .world-map-svg-wrapper :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: transparent;
+  }
+
+  .world-map-svg-wrapper :global(svg path) {
+    fill: #f1f5f9;
+    stroke: rgba(0, 0, 0, 0.15);
+    stroke-width: 0.5px;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .world-map-svg-wrapper :global(svg path) {
+      fill: #0d1527;
+      stroke: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  .world-map-svg-wrapper :global(svg path:hover) {
+    fill: rgba(129, 140, 248, 0.12) !important;
+    stroke: var(--accent-color-1) !important;
+    cursor: pointer;
+  }
+
+  /* Pins styling */
+  :global(.pin) {
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  :global(.pin-touch-target) {
+    fill: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  :global(.pin-dot) {
+    fill: var(--accent-color-1);
+    stroke: #ffffff;
+    stroke-width: 1.2px;
+    transition: fill 0.25s ease, stroke-width 0.25s ease, r 0.25s ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(.pin-dot) {
+      fill: #a5b4fc;
+      stroke: #ffffff;
+      stroke-width: 1.2px;
+    }
+  }
+
+  /* Highlight on hover and active click */
+  :global(.pin:hover .pin-dot) {
+    fill: #ef4444 !important;
+    r: 4px;
+  }
+
+  :global(.pin.active .pin-dot) {
+    fill: #ef4444 !important;
+    stroke: #ffffff;
+    stroke-width: 1.5px;
+    r: 4.5px;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :global(.pin:hover .pin-dot) {
+      fill: #f87171 !important;
+    }
+    :global(.pin.active .pin-dot) {
+      fill: #f87171 !important;
+      stroke: #ffffff;
+    }
+  }
+
+  /* Interactive countries style */
+  :global(.interactive-country) {
+    cursor: pointer;
+  }
+  
+  :global(.interactive-country:hover),
+  :global(.interactive-country:hover path),
+  :global(.interactive-country:hover rect) {
+    fill: rgba(129, 140, 248, 0.22) !important;
+    stroke: var(--accent-color-1) !important;
+  }
+  
+  :global(.active-country),
+  :global(.active-country path),
+  :global(.active-country rect) {
+    fill: rgba(129, 140, 248, 0.38) !important;
+    stroke: var(--accent-color-1) !important;
+  }
+
+  /* Back Button Pill Style */
+  .trip-details-card :global(.back-to-country-btn) {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(128, 128, 128, 0.05);
+    border: 1px solid rgba(128, 128, 128, 0.12);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card :global(.back-to-country-btn) {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+  
+  .trip-details-card :global(.back-to-country-btn:hover) {
+    background: var(--accent-color-1);
+    border-color: var(--accent-color-1);
+    color: #ffffff;
+    transform: translateX(-3px);
+    box-shadow: 0 4px 10px rgba(129, 140, 248, 0.25);
+  }
+
+  /* Country city list details card styling */
+  .trip-details-card :global(.country-city-list) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .trip-details-card :global(.city-item) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.1rem;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(128, 128, 128, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card :global(.city-item) {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  .trip-details-card :global(.city-item:hover) {
+    background: var(--accent-color-1);
+    border-color: var(--accent-color-1);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(129, 140, 248, 0.25);
+  }
+
+  .trip-details-card :global(.city-info) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .trip-details-card :global(.city-name) {
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+  
+  .trip-details-card :global(.city-date) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    transition: color 0.2s ease;
+  }
+
+  /* Zoom UI controls */
+  .zoom-controls {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 15;
+  }
+
+  .zoom-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .zoom-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .zoom-btn:hover {
+    background: var(--accent-color-1);
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  .zoom-btn i.material-icons {
+    font-size: 1.2rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .map-instructions {
+      background: rgba(15, 23, 42, 0.7);
+      color: #cbd5e1;
+    }
+  }
+
+  /* Floating Details Card Panel */
+  .trip-details-card {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    bottom: 24px;
+    width: 380px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 20px;
+    box-shadow: 
+      0 4px 30px rgba(0, 0, 0, 0.02),
+      0 20px 50px rgba(0, 0, 0, 0.08),
+      inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(430px);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    pointer-events: auto;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card {
+      background: rgba(9, 17, 34, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.2),
+        0 25px 60px rgba(0, 0, 0, 0.45),
+        inset 0 1px 1px rgba(255, 255, 255, 0.07);
+    }
+  }
+
+  .trip-details-card.active {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .close-card-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(0, 0, 0, 0.04);
+    border: none;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 25;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .close-card-btn {
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .close-card-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: rotate(90deg);
+  }
+
+  .trip-card-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2.2rem 1.8rem 1.8rem 1.8rem;
+    scrollbar-width: none; /* Hide scrollbar for clean design */
+  }
+
+  .trip-card-content::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Safari/Chrome */
+  }
+
+  /* Empty State / Select Hint */
+  .select-hint {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .select-hint-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(129, 140, 248, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(129, 140, 248, 0.2);
+    animation: hint-glow 3s infinite ease-in-out;
+  }
+
+  @keyframes hint-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 15px 4px rgba(129, 140, 248, 0.4);
+    }
+  }
+
+  .select-hint-icon {
+    font-size: 2rem;
+    color: var(--accent-color-1);
+  }
+
+  .select-hint-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  .select-hint-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    opacity: 0.65;
+    color: var(--text-color);
+  }
+
+  /* Item layout styles inside the card matching item-description.astro */
+  .trip-details-card :global(.item) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+  }
+
+  .trip-details-card :global(.image-wrapper) {
+    width: 100%;
+  }
+
+  .trip-details-card :global(.item-photo) {
+    display: block;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card :global(.item-photo) {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .trip-details-card :global(.content-wrapper) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .trip-details-card :global(.item-date) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent-color-1);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+  }
+
+  .trip-details-card :global(.content-wrapper h2) {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.25;
+  }
+
+  .trip-details-card :global(.content-wrapper p) {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    opacity: 0.9;
+    color: var(--text-color);
+    margin: 0;
+  }
+
+  .trip-details-card :global(.trip-stats-badge) {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-top: 0.25rem;
+  }
+
+  .trip-details-card :global(.trip-card-divider) {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(128, 128, 128, 0.15) 0%, rgba(128, 128, 128, 0.03) 100%);
+    margin: 1.25rem 0;
+  }
+
+  .trip-details-card :global(.city-arrow-icon) {
+    font-size: 1.25rem;
+    opacity: 0.4;
+    transition: all 0.2s ease;
+  }
+
+  .trip-details-card :global(.city-item:hover .city-arrow-icon) {
+    opacity: 1;
+    transform: translateX(3px);
+    color: #ffffff;
+  }
+
+  .trip-details-card :global(.city-info) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  /* Horizontal scrolling photo gallery */
+  .trip-details-card :global(.trip-photos) {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    padding: 0.2rem 0 0.8rem 0;
+    margin: 1rem 0 1.25rem 0;
+    scrollbar-width: none; /* hide default scrollbar */
+  }
+
+  .trip-details-card :global(.trip-photos::-webkit-scrollbar) {
+    display: none;
+  }
+  
+  .trip-details-card :global(.trip-photo) {
+    height: 120px;
+    width: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card :global(.trip-photo) {
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .trip-details-card :global(.trip-photo:hover) {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trip-details-card :global(.trip-photo:hover) {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+
+
+  /* Hover HTML Tooltip */
+  .map-tooltip {
+    position: absolute;
+    background: var(--text-color);
+    color: var(--bg-color);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -100%) translateY(-10px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 100;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .map-tooltip.active {
+    opacity: 1;
+    transform: translate(-50%, -100%) translateY(-5px);
+  }
+
+  /* Lightbox Overlay for Image click preview */
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 9, 16, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-img {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    transform: scale(0.95);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lightbox.active .lightbox-img {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 3rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* Responsive styling for Tablet and Mobile layout */
+  @media (max-width: 768px) {
+    .main-container {
+      padding: 1.5rem 1rem 3rem 1rem;
+    }
+
+    .intro-section h1 {
+      font-size: 2rem;
+    }
+
+    .intro-section p {
+      font-size: 0.95rem;
+    }
+
+    .map-instructions {
+      display: none; /* hide mouse-oriented instructions on mobile */
+    }
+
+    .map-viewport-wrapper {
+      width: 100%;
+      margin: 0;
+      border-radius: 12px;
+      aspect-ratio: auto;
+      height: 480px; /* fixed height for viewport on mobile */
+    }
+
+    .trip-details-card {
+      top: auto;
+      right: 15px;
+      left: 15px;
+      bottom: 15px;
+      width: auto;
+      height: 300px;
+      transform: translateY(340px);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(190%);
+      border-radius: 18px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .trip-details-card {
+        background: rgba(9, 17, 34, 0.85);
+      }
+    }
+
+    .trip-details-card.active {
+      transform: translateY(0);
+    }
+
+    .trip-card-content {
+      padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+    }
+
+    .trip-card-content :global(.content-wrapper h2) {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .trip-card-content :global(.trip-photos) {
+      height: 90px;
+      margin: 0.5rem 0;
+    }
+
+    .trip-card-content :global(.trip-photo) {
+      height: 80px;
+      width: 120px;
+    }
+
+    .trip-card-content :global(.content-wrapper p) {
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Cities database to use on the client
+  const cities = [
+    {
+      id: "zurigo",
+      name: "Zurigo",
+      country: "Svizzera",
+      date: "Agosto - Settembre 2025",
+      x: 425.03,
+      y: 404.68,
+      description: "Stage di ricerca bisettimanale presso la sede di Google Zurigo. Ho lavorato a un progetto di ricerca in ambito informatico e vissuto un'esperienza immersiva in un ambiente tecnologico internazionale.",
+      photos: ["/google_hq.jpg", "/google_people.png", "/google_presentation.png"]
+    },
+    {
+      id: "lund",
+      name: "Lund",
+      country: "Svezia",
+      date: "Luglio 2023",
+      x: 435.82,
+      y: 375.28,
+      description: "EGOI 2023. La mia prima Olimpiade Femminile Europea di Informatica, dove ho conquistato una medaglia d'argento (la prima storica per l'Italia) al termine dei due giorni di gara.",
+      photos: ["/egoi2023_1.jpg"]
+    },
+    {
+      id: "veldhoven",
+      name: "Veldhoven / Eindhoven",
+      country: "Paesi Bassi",
+      date: "Luglio 2024",
+      x: 417.76,
+      y: 391.42,
+      description: "EGOI 2024. Seconda partecipazione all'Olimpiade Femminile Europea di Informatica, conclusasi con un'altra medaglia d'argento e l'opportunità di visitare da vicino il campus del TU Eindhoven.",
+      photos: ["/egoi2024.jpg"]
+    },
+    {
+      id: "bonn",
+      name: "Bonn",
+      country: "Germania",
+      date: "Luglio 2025",
+      x: 421.68,
+      y: 393.76,
+      description: "EGOI 2025. Terza partecipazione e terza medaglia d'argento alle Olimpiadi Femminili Europee di Informatica, ospitata dalla prestigiosa Università di Bonn (Uni-Bonn) nota a livello internazionale in ambito matematico.",
+      photos: ["/egoi2025.jpg"]
+    },
+    {
+      id: "cesenatico",
+      name: "Cesenatico",
+      country: "Italia",
+      date: "Maggio 2026",
+      x: 433.99,
+      y: 414.10,
+      description: "EGOI 2026. Quarta e ultima partecipazione gareggiando in casa nella nota località marittima di Cesenatico. Ho vinto una medaglia d'oro, la prima in assoluto per l'Italia in questa competizione.",
+      photos: ["/egoi2026.jpg"]
+    },
+    {
+      id: "alessandria",
+      name: "Alessandria",
+      country: "Egitto",
+      date: "Settembre 2024",
+      x: 474.64,
+      y: 450.58,
+      description: "IOI 2024. Partecipazione alle Olimpiadi Internazionali di Informatica rappresentando la squadra del Lussemburgo, nel quale ho studiato durante l'anno scolastico 2023/24.",
+      photos: ["/ioi_mascotte.jpg"]
+    },
+    {
+      id: "lussemburgo",
+      name: "Lussemburgo",
+      country: "Lussemburgo",
+      date: "A.S. 2023/2024",
+      x: 420.43,
+      y: 397.56,
+      description: "Un anno scolastico trascorso all'estero studiando in Lussemburgo, che mi ha permesso di arricchire il mio percorso accademico, conoscere una nuova cultura e qualificarmi per le IOI 2024.",
+      photos: ["/code.jpg"]
+    },
+    {
+      id: "senigallia",
+      name: "Senigallia",
+      country: "Italia",
+      date: "Aprile 2026",
+      x: 435.75,
+      y: 415.57,
+      description: "Gara Nazionale delle Olimpiadi di Fisica. Ho affrontato la Gara Nazionale a Senigallia, strutturata su due giorni (una prova teorica di tre problemi e una prova sperimentale in laboratorio) e ho ricevuto una medaglia di bronzo.",
+      photos: ["/senigallia.jpg"]
+    },
+    {
+      id: "pisa",
+      name: "Pisa",
+      country: "Italia",
+      date: "Novembre 2024 e 2025",
+      x: 429.35,
+      y: 415.45,
+      description: "Partecipazione all'EGMOCamp presso la Scuola Normale Superiore, uno stage intensivo di preparazione e selezione della squadra italiana per le Olimpiadi Femminili Europee di Matematica (EGMO).",
+      photos: ["/egmocamp.png"]
+    },
+    {
+      id: "gressoney",
+      name: "Gressoney-Saint-Jean",
+      country: "Italia",
+      date: "Marzo 2025",
+      x: 423.37,
+      y: 409.52,
+      description: "Stage di fisica dell'AIF focalizzato sull'introduzione alla fisica quantistica, tra studio intensivo, approfondimenti e confronti stimolanti in alta montagna.",
+      photos: ["/fisica_ottica.jpg"]
+    },
+    {
+      id: "bardonecchia",
+      name: "Bardonecchia",
+      country: "Italia",
+      date: "Maggio 2025",
+      x: 422.76,
+      y: 411.37,
+      description: "Stage di matematica di Mathesis dedicato agli spazi non euclidei e alla curvatura dello spazio presso il Villaggio Olimpico di Bardonecchia.",
+      photos: ["/bardonecchia.jpg"]
+    },
+    {
+      id: "volterra",
+      name: "Volterra",
+      country: "Italia",
+      date: "2022 - 2025",
+      x: 430.41,
+      y: 416.35,
+      description: "Stage per i Probabili Olimpici (PO) organizzati dalle Olimpiadi di Informatica a Volterra per selezionare e preparare le squadre internazionali. Un percorso di stage e gare in presenza impegnativo ma altamente formativo.",
+      photos: ["/volterra.jpg"]
+    },
+    {
+      id: "bergamo",
+      name: "Bergamo",
+      country: "Italia",
+      date: "Ottobre 2023",
+      x: 427.67,
+      y: 409.75,
+      description: "Olimpiadi Italiane di Informatica (OII 2023), svoltasi a Bergamo, dove ho conquistato una medaglia d'argento classificandomi 13esima nazionale.",
+      photos: ["/oii2023.jpg"]
+    },
+    {
+      id: "reggio_emilia",
+      name: "Reggio Emilia",
+      country: "Italia",
+      date: "Settembre 2024",
+      x: 429.88,
+      y: 412.67,
+      description: "Olimpiadi Italiane di Informatica (OII 2024), svoltasi a Reggio Emilia. Ho conquistato una medaglia d'oro posizionandomi al 5° posto nazionale.",
+      photos: ["/oii2024.jpg"]
+    },
+    {
+      id: "udine",
+      name: "Udine",
+      country: "Italia",
+      date: "Settembre 2025",
+      x: 435.95,
+      y: 408.64,
+      description: "Olimpiadi Italiane di Informatica (OII 2025), tenutasi a Udine. Ho conquistato una medaglia d'argento posizionandomi in 13esima posizione.",
+      photos: ["/oii2025.avif"]
+    },
+    {
+      id: "londra",
+      name: "Londra",
+      country: "Regno Unito",
+      date: "Giugno 2024",
+      x: 404.92,
+      y: 390.28,
+      description: "Western European Olympiad in Informatics (WEOI 2024). Partecipazione alla prima storica edizione delle Olimpiadi dell'Europa Occidentale di Informatica svoltasi a Londra, rappresentando l'Italia.",
+      photos: ["/weoi.jpg"]
+    },
+    {
+      id: "varsavia",
+      name: "Varsavia",
+      country: "Polonia",
+      date: "Molte volte",
+      x: 453.98,
+      y: 387.83,
+      description: "Visite frequenti a Varsavia, una città a cui sono molto legata a causa delle mie radici familiari, essendo per metà polacca.",
+      photos: ["/warszawa.jpg"]
+    },
+    {
+      id: "barcellona",
+      name: "Barcellona",
+      country: "Spagna",
+      date: "Primavera 2026",
+      x: 410.26,
+      y: 421.11,
+      description: "Gita scolastica di quinta liceo. Un viaggio indimenticabile a Barcellona per festeggiare la fine del percorso scolastico, tra arte, cultura e momenti di condivisione con i compagni di classe.",
+      photos: ["/barcellona.png"]
+    },
+    {
+      id: "catania",
+      name: "Catania",
+      country: "Italia",
+      date: "Primavera 2025",
+      x: 440.20,
+      y: 431.65,
+      description: "Gita scolastica di quarta liceo a Catania, alla scoperta delle bellezze storiche e naturali della Sicilia e dell'Etna.",
+      photos: ["/catania.png"]
+    },
+    {
+      id: "cracovia",
+      name: "Cracovia",
+      country: "Polonia",
+      date: "Primavera 2025",
+      x: 451.50,
+      y: 395.05,
+      description: "Viaggio della memoria a Cracovia. Abbiamo visitato il campo di concentramento di Auschwitz e i ghetti ebraici, un'esperienza profondamente toccante e riflessiva che mi ha segnato profondamente.",
+      photos: ["/cracovia.png"]
+    }
+  ];
+
+  // DOM elements
+  const viewport = document.getElementById('map-viewport') as HTMLElement;
+  const container = document.getElementById('map-container') as HTMLElement;
+  const tooltip = document.getElementById('map-tooltip') as HTMLElement;
+  const tripCard = document.getElementById('trip-card') as HTMLElement;
+  const tripCardContent = document.getElementById('trip-card-content') as HTMLElement;
+  const closeCardBtn = document.getElementById('close-card') as HTMLElement;
+  
+  const zoomInBtn = document.getElementById('zoom-in') as HTMLElement;
+  const zoomOutBtn = document.getElementById('zoom-out') as HTMLElement;
+  const zoomResetBtn = document.getElementById('zoom-reset') as HTMLElement;
+  
+  const focusBtns = document.querySelectorAll('.focus-btn');
+  
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxClose = document.getElementById('lightbox-close') as HTMLElement;
+
+  const mapWidth = 784.077;
+  const mapHeight = 458.627;
+  const viewBoxOffsetX = 30.767;
+  const viewBoxOffsetY = 241.591;
+
+  // State
+  let scale = 1;
+  let translateX = 0;
+  let translateY = 0;
+  
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let lastTranslateX = 0;
+  let lastTranslateY = 0;
+
+  let minScale = 0.5;
+  const maxScale = 15;
+
+  // Initialize view: fit map to viewport
+  function initMap(center = true) {
+    if (!viewport || !container) return;
+    const vRect = viewport.getBoundingClientRect();
+    
+    // Fit map to viewport
+    const scaleX = vRect.width / mapWidth;
+    const scaleY = vRect.height / mapHeight;
+    const fitScale = Math.min(scaleX, scaleY);
+    
+    minScale = fitScale; // Prevent zooming out further than the initial fit
+    scale = fitScale;
+    
+    if (center) {
+      translateX = (vRect.width - mapWidth * scale) / 2;
+      translateY = (vRect.height - mapHeight * scale) / 2;
+    }
+    
+    applyTransform(true); // instant initialization
+  }
+
+  // Update SVG transform
+  function applyTransform(instant = false) {
+    if (!container) return;
+    
+    if (instant) {
+      gsap.set(container, {
+        x: translateX,
+        y: translateY,
+        scale: scale
+      });
+      updatePinsScale();
+    } else {
+      gsap.to(container, {
+        x: translateX,
+        y: translateY,
+        scale: scale,
+        duration: 0.3,
+        ease: "power2.out",
+        onUpdate: () => {
+          updatePinsScale();
+        }
+      });
+    }
+  }
+
+  // Keep pins size constant regardless of map zoom scale
+  function updatePinsScale() {
+    if (!container) return;
+    const pins = document.querySelectorAll('.pin');
+    const currentScale = (gsap.getProperty(container, "scale") as number) || scale || 1;
+    const pinScale = 0.8 / currentScale;
+    pins.forEach(pin => {
+      const x = pin.getAttribute('data-x');
+      const y = pin.getAttribute('data-y');
+      if (x && y) {
+        pin.setAttribute('transform', `translate(${x}, ${y}) scale(${pinScale})`);
+      }
+    });
+  }
+
+  // Linear map bounds clamping
+  function clampTranslate() {
+    if (!viewport) return;
+    const vRect = viewport.getBoundingClientRect();
+    
+    const marginX = vRect.width * 0.7;
+    const marginY = vRect.height * 0.7;
+
+    const minX = -mapWidth * scale + marginX;
+    const maxX = vRect.width - marginX;
+    const minY = -mapHeight * scale + marginY;
+    const maxY = vRect.height - marginY;
+
+    translateX = Math.min(Math.max(translateX, minX), maxX);
+    translateY = Math.min(Math.max(translateY, minY), maxY);
+  }
+
+  // Smooth zoom function
+  function zoom(factor: number, clientX?: number, clientY?: number) {
+    if (!viewport) return;
+    const newScale = scale * factor;
+    const nextScale = Math.min(Math.max(newScale, minScale), maxScale);
+    
+    // Zoom around target coordinates or viewport center
+    let zoomX = 0;
+    let zoomY = 0;
+    
+    const rect = viewport.getBoundingClientRect();
+    if (clientX !== undefined && clientY !== undefined) {
+      zoomX = clientX - rect.left;
+      zoomY = clientY - rect.top;
+    } else {
+      zoomX = rect.width / 2;
+      zoomY = rect.height / 2;
+    }
+    
+    // Position of zoom point in map coordinates
+    const mapX = (zoomX - translateX) / scale;
+    const mapY = (zoomY - translateY) / scale;
+    
+    // Adjust translations
+    translateX = zoomX - mapX * nextScale;
+    translateY = zoomY - mapY * nextScale;
+    scale = nextScale;
+    
+    clampTranslate();
+    applyTransform();
+    resetFocusButtons();
+  }
+
+  // Handle Focus Area buttons click
+  function focusArea(area: string) {
+    if (!viewport) return;
+    const rect = viewport.getBoundingClientRect();
+    
+    let targetX = 0;
+    let targetY = 0;
+    let targetScale = 1;
+    
+    if (area === 'world') {
+      initMap(true);
+      return;
+    } else if (area === 'europe') {
+      // Europe centroid coordinates: ~430, ~395
+      const localX = 430 - viewBoxOffsetX;
+      const localY = 395 - viewBoxOffsetY;
+      targetScale = Math.min(rect.width / 150, 4.5);
+      targetX = rect.width / 2 - localX * targetScale;
+      targetY = rect.height / 2 - localY * targetScale;
+    } else if (area === 'italy') {
+      // Italy centroid: ~430, ~412
+      const localX = 430 - viewBoxOffsetX;
+      const localY = 412 - viewBoxOffsetY;
+      targetScale = Math.min(rect.width / 45, 9.5);
+      targetX = rect.width / 2 - localX * targetScale;
+      targetY = rect.height / 2 - localY * targetScale;
+    }
+
+    scale = targetScale;
+    translateX = targetX;
+    translateY = targetY;
+    
+    clampTranslate();
+    applyTransform();
+  }
+
+  function resetFocusButtons() {
+    focusBtns.forEach(btn => btn.classList.remove('active'));
+  }
+
+  // Mouse Drag / Touch Drag controls
+  function onPointerDown(e: MouseEvent | TouchEvent) {
+    isDragging = true;
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    startX = clientX;
+    startY = clientY;
+    lastTranslateX = translateX;
+    lastTranslateY = translateY;
+    
+    if (viewport) {
+      viewport.style.cursor = 'grabbing';
+    }
+  }
+
+  function onPointerMove(e: MouseEvent | TouchEvent) {
+    if (!isDragging) return;
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const dx = clientX - startX;
+    const dy = clientY - startY;
+    
+    translateX = lastTranslateX + dx;
+    translateY = lastTranslateY + dy;
+    
+    clampTranslate();
+    applyTransform(true); // make dragging responsive without transition lag
+  }
+
+  function onPointerUp() {
+    isDragging = false;
+    if (viewport) {
+      viewport.style.cursor = 'grab';
+    }
+  }
+
+  // Mouse Wheel scroll-to-zoom
+  function onWheel(e: WheelEvent) {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    zoom(factor, e.clientX, e.clientY);
+  }
+
+  // Display trip details inside card
+  function displayTripDetails(id: string) {
+    const trip = cities.find(c => c.id === id);
+    if (!trip || !tripCardContent) return;
+
+    // Build photo elements (excluding the first photo which is displayed as the main item-photo)
+    let photosHtml = '';
+    if (trip.photos && trip.photos.length > 1) {
+      photosHtml = `
+        <div class="trip-photos">
+          ${trip.photos.slice(1).map(p => `<img src="${p}" alt="${trip.name}" class="trip-photo" />`).join('')}
+        </div>
+      `;
+    }
+
+    // Find country ID from country name
+    const countryId = Object.keys(countryNames).find(key => countryNames[key].toLowerCase() === trip.country.toLowerCase());
+    const backBtnHtml = countryId ? `
+      <button class="back-to-country-btn" data-country-id="${countryId}">
+        <i class="material-icons" style="font-size: 1rem; vertical-align: middle; margin-right: 4px;">arrow_back</i>
+        Elenco ${trip.country}
+      </button>
+    ` : '';
+
+    // Insert trip content matching the Item template
+    tripCardContent.innerHTML = `
+      ${backBtnHtml}
+      <div class="item">
+        <div class="image-wrapper">
+          <img src="${trip.photos[0]}" alt="${trip.name}" class="item-photo" />
+        </div>
+        <div class="content-wrapper">
+          <span class="item-date">${trip.date}, ${trip.country}</span>
+          <h2>${trip.name}</h2>
+          <p>${trip.description}</p>
+        </div>
+      </div>
+      ${photosHtml}
+    `;
+
+    // Make card active
+    if (tripCard) {
+      tripCard.classList.add('active');
+    }
+  }
+
+  // Map country ID to display name
+  const countryNames: Record<string, string> = {
+    'it': 'Italia',
+    'ch': 'Svizzera',
+    'de': 'Germania',
+    'nl': 'Paesi Bassi',
+    'se': 'Svezia',
+    'eg': 'Egitto',
+    'lu': 'Lussemburgo',
+    'gb': 'Regno Unito',
+    'es': 'Spagna',
+    'pl': 'Polonia'
+  };
+
+  // Country centers and zoom scales relative to viewport width
+  const countryViews: Record<string, { x: number, y: number, scaleFactor: number }> = {
+    'it': { x: 430, y: 412, scaleFactor: 45 },      // smaller scaleFactor means higher zoom
+    'ch': { x: 425.03, y: 404.68, scaleFactor: 20 },
+    'de': { x: 421.68, y: 393.76, scaleFactor: 30 },
+    'nl': { x: 417.76, y: 391.42, scaleFactor: 20 },
+    'se': { x: 438, y: 360, scaleFactor: 55 },
+    'eg': { x: 476, y: 452, scaleFactor: 45 },
+    'lu': { x: 420.43, y: 397.56, scaleFactor: 12 },
+    'gb': { x: 404.92, y: 390.28, scaleFactor: 25 },
+    'es': { x: 408, y: 423, scaleFactor: 35 },
+    'pl': { x: 452.5, y: 391.0, scaleFactor: 25 }
+  };
+
+  // Zoom map smoothly to country coordinates
+  function zoomToCountry(countryId: string) {
+    const view = countryViews[countryId];
+    if (!view || !viewport) return;
+    
+    const rect = viewport.getBoundingClientRect();
+    const targetScale = Math.min(rect.width / view.scaleFactor, 12);
+    
+    const localX = view.x - viewBoxOffsetX;
+    const localY = view.y - viewBoxOffsetY;
+    
+    const targetX = rect.width / 2 - localX * targetScale;
+    const targetY = rect.height / 2 - localY * targetScale;
+    
+    scale = targetScale;
+    translateX = targetX;
+    translateY = targetY;
+    
+    clampTranslate();
+    applyTransform();
+  }
+
+  // Clear map highlights and close details card
+  function clearSelection() {
+    if (tripCard) {
+      tripCard.classList.remove('active');
+    }
+    const pins = document.querySelectorAll('.pin');
+    pins.forEach(p => p.classList.remove('active'));
+    
+    const countries = document.querySelectorAll('.interactive-country');
+    countries.forEach(c => c.classList.remove('active-country'));
+  }
+
+  // Display list of cities in a clicked country
+  function displayCountryDetails(countryId: string) {
+    const countryName = countryNames[countryId];
+    if (!countryName || !tripCardContent) return;
+
+    // Filter cities visited in this country
+    const countryCities = cities.filter(c => c.country.toLowerCase() === countryName.toLowerCase());
+
+    const listHtml = `
+      <div class="item">
+        <div class="content-wrapper">
+          <span class="item-date">Nazioni visitate</span>
+          <h2>${countryName}</h2>
+          <div class="trip-stats-badge">
+            <i class="material-icons" style="font-size: 0.95rem; margin-right: 4px; color: var(--accent-color-1); vertical-align: middle;">explore</i>
+            <span style="vertical-align: middle;">${countryCities.length} ${countryCities.length === 1 ? 'città visitata' : 'città visitate'}</span>
+          </div>
+        </div>
+      </div>
+      <div class="trip-card-divider"></div>
+      <ul class="country-city-list">
+        ${countryCities.map(c => `
+          <li class="city-item" data-city-id="${c.id}">
+            <div class="city-info">
+              <span class="city-name">${c.name}</span>
+              <span class="city-date">${c.date}</span>
+            </div>
+            <i class="material-icons city-arrow-icon">chevron_right</i>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+
+    tripCardContent.innerHTML = listHtml;
+    
+    if (tripCard) {
+      tripCard.classList.add('active');
+    }
+  }
+
+  // Highlight the targeted country shape on the SVG
+  function highlightCountry(id: string) {
+    const countries = document.querySelectorAll('.interactive-country');
+    countries.forEach(c => c.classList.remove('active-country'));
+    
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active-country');
+    }
+  }
+
+  // Select a pinpoint: highlight it and zoom in on it
+  function selectPin(id: string) {
+    // Highlight pin in SVG
+    const pins = document.querySelectorAll('.pin');
+    pins.forEach(p => p.classList.remove('active'));
+    
+    const targetPin = document.getElementById(`pin-${id}`);
+    if (targetPin) {
+      targetPin.classList.add('active');
+    }
+
+    // Centering point with zoom animation
+    const trip = cities.find(c => c.id === id);
+    if (trip && viewport) {
+      const rect = viewport.getBoundingClientRect();
+      
+      // Target scale for zoom-to-city
+      const targetScale = Math.min(rect.width / 90, 7.5);
+      
+      // Target coordinates
+      const localX = trip.x - viewBoxOffsetX;
+      const localY = trip.y - viewBoxOffsetY;
+      const targetX = rect.width / 2 - localX * targetScale;
+      const targetY = rect.height / 2 - localY * targetScale;
+
+      scale = targetScale;
+      translateX = targetX;
+      translateY = targetY;
+      
+      clampTranslate();
+      applyTransform();
+      
+      // Update details card
+      displayTripDetails(id);
+      resetFocusButtons();
+    }
+  }
+
+  // Event Listeners
+  if (viewport) {
+    viewport.addEventListener('mousedown', onPointerDown);
+    window.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
+    
+    viewport.addEventListener('touchstart', onPointerDown, { passive: true });
+    window.addEventListener('touchmove', onPointerMove, { passive: true });
+    window.addEventListener('touchend', onPointerUp);
+
+    viewport.addEventListener('wheel', onWheel, { passive: false });
+  }
+
+  // Setup click handler for SVG paths and Pinpoints
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    
+    // 1. Check if clicked on a pinpoint or its children
+    const pin = target.closest('.pin');
+    if (pin) {
+      const id = pin.getAttribute('data-id');
+      if (id) {
+        selectPin(id);
+      }
+      return;
+    }
+
+    // 2. Check if clicked on a city list item inside the details card
+    const cityItem = target.closest('.city-item');
+    if (cityItem) {
+      const cityId = cityItem.getAttribute('data-city-id');
+      if (cityId) {
+        selectPin(cityId);
+      }
+      return;
+    }
+
+    // Check if clicked on the back button
+    const backBtn = target.closest('.back-to-country-btn');
+    if (backBtn) {
+      const countryId = backBtn.getAttribute('data-country-id');
+      if (countryId) {
+        displayCountryDetails(countryId);
+        highlightCountry(countryId);
+        zoomToCountry(countryId);
+        
+        // Remove pin active states
+        const pins = document.querySelectorAll('.pin');
+        pins.forEach(p => p.classList.remove('active'));
+      }
+      return;
+    }
+
+    // 3. Check if clicked on a country path shape
+    const countryPath = target.closest('path, g');
+    if (countryPath) {
+      // Find if this path belongs to a visited country
+      let current: HTMLElement | null = countryPath as HTMLElement;
+      let targetId: string | null = null;
+      while (current && current.tagName !== 'svg') {
+        const id = current.getAttribute('id');
+        if (id && countryNames[id.toLowerCase()]) {
+          targetId = id.toLowerCase();
+          break;
+        }
+        current = current.parentElement;
+      }
+                       
+      if (targetId) {
+        displayCountryDetails(targetId);
+        highlightCountry(targetId);
+        zoomToCountry(targetId);
+        
+        // Remove pin active states
+        const pins = document.querySelectorAll('.pin');
+        pins.forEach(p => p.classList.remove('active'));
+        return;
+      }
+    }
+    
+    // Handle image lightbox overlay open
+    if (target.classList.contains('trip-photo')) {
+      const src = target.getAttribute('src');
+      if (src && lightboxImg && lightbox) {
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+      }
+      return;
+    }
+
+    // 4. Clicked outside active elements but inside viewport wrapper -> clear selection
+    const clickedCard = target.closest('.trip-details-card');
+    const clickedZoom = target.closest('.zoom-controls');
+    const clickedFocus = target.closest('.focus-bar');
+    const clickedViewport = target.closest('.map-viewport-wrapper');
+    
+    if (clickedViewport && !clickedCard && !clickedZoom && !clickedFocus) {
+      clearSelection();
+    }
+  });
+
+  // Close Card Button handler
+  if (closeCardBtn) {
+    closeCardBtn.addEventListener('click', () => {
+      clearSelection();
+    });
+  }
+
+  // Hover Tooltip triggers
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target as HTMLElement;
+    
+    // Check pin hover first
+    const pin = target.closest('.pin');
+    if (pin && tooltip) {
+      const name = pin.getAttribute('data-name') || '';
+      tooltip.textContent = name;
+      tooltip.classList.add('active');
+      return;
+    }
+    
+    // Check country hover
+    const country = target.closest('.interactive-country');
+    if (country && tooltip) {
+      const id = country.getAttribute('id');
+      const name = id ? countryNames[id.toLowerCase()] : '';
+      if (name) {
+        tooltip.textContent = name;
+        tooltip.classList.add('active');
+      }
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (tooltip && tooltip.classList.contains('active') && viewport) {
+      const rect = viewport.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const target = e.target as HTMLElement;
+    const pin = target.closest('.pin');
+    const country = target.closest('.interactive-country');
+    
+    if ((pin || country) && tooltip) {
+      tooltip.classList.remove('active');
+    }
+  });
+
+  // Zoom Button Controls click triggers
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', () => zoom(1.3));
+  }
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', () => zoom(1 / 1.3));
+  }
+  if (zoomResetBtn) {
+    zoomResetBtn.addEventListener('click', () => {
+      initMap(true);
+      clearSelection();
+    });
+  }
+
+  // Focus Button Controls triggers
+  focusBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      resetFocusButtons();
+      btn.classList.add('active');
+      const area = btn.getAttribute('data-focus') || 'world';
+      focusArea(area);
+      clearSelection();
+    });
+  });
+
+  // Full-Screen Image Lightbox triggers
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', () => {
+      if (lightbox) lightbox.classList.remove('active');
+    });
+  }
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+  }
+
+  // Window Resize re-adjusts
+  window.addEventListener('resize', () => {
+    // Store current percentage center before resize
+    if (!viewport) return;
+    const vRect = viewport.getBoundingClientRect();
+    const mapCenterX = (vRect.width / 2 - translateX) / scale;
+    const mapCenterY = (vRect.height / 2 - translateY) / scale;
+    
+    // Fit map scale
+    initMap(false);
+    
+    // Restore center
+    translateX = vRect.width / 2 - mapCenterX * scale;
+    translateY = vRect.height / 2 - mapCenterY * scale;
+    clampTranslate();
+    applyTransform(true);
+  });
+
+  // Mark visited countries as interactive
+  const visitedCountries = ['it', 'ch', 'de', 'nl', 'se', 'eg', 'lu', 'gb', 'es', 'pl'];
+  visitedCountries.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.add('interactive-country');
+    }
+  });
+
+  // Start initialization
+  initMap(true);
+</script>
