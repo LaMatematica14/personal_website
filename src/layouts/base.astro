@@ -12,7 +12,8 @@ const {
 
 
 import '@fontsource/merriweather';
-import HeaderDropdowns from '../components/header_dropdowns.astro';'../components/header_dropdowns.astro'
+import HeaderDropdowns from '../components/header_dropdowns.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <!DOCTYPE html>
@@ -34,40 +35,40 @@ import HeaderDropdowns from '../components/header_dropdowns.astro';'../component
     <div class="layout-wrapper">
       <header class="site-header">
         <nav class="nav-container">
-          <a href="/" class="logo"><i class="material-icons">home</i></a>
+          <a href={base} class="logo"><i class="material-icons">home</i></a>
           <div class="nav-links">
 
-            <a href="/about" style="padding-left: 1rem"> <b> Chi sono? </b> </a>
+            <a href={base + "about"} style="padding-left: 1rem"> <b> Chi sono? </b> </a>
 
-            <a href="/viaggi"style="padding-left: 1rem"> <b> Viaggi</b> </a>
+            <a href={base + "viaggi"} style="padding-left: 1rem"> <b> Viaggi</b> </a>
 
             <HeaderDropdowns title = "Progetti" main_page = '/progetti/intro'
               options = {[
-                { label: 'Programmazione competitiva', url: '/progetti/cp' },
-                { label: 'F1inSchools', url: '/progetti/f1inschools' },
-                { label: 'Scolastici', url: '/progetti/scolastici' },
-                { label: 'Musica e arti', url: '/progetti/arte'}
+                { label: 'Programmazione competitiva', url: base + 'progetti/cp' },
+                { label: 'F1inSchools', url: base + 'progetti/f1inschools' },
+                { label: 'Scolastici', url: base + 'progetti/scolastici' },
+                { label: 'Musica e arti', url: base + 'progetti/arte'}
               ]}
             />
 
             <HeaderDropdowns title="FSL" main_page = '/fsl/intro'
               options={[
-                { label: 'Presentazione', url: '/fsl/PresentazioneFSL.pdf', target: '_blank'},
-                { label: 'Stage Google', url: '/fsl/google' },
-                { label: 'EGMO Camp', url: '/fsl/egmo_camp' },
-                { label: 'Stage di matematica e fisica', url: '/fsl/aif_e_mathesis' },
+                { label: 'Presentazione', url: base + 'fsl/PresentazioneFSL.pdf', target: '_blank'},
+                { label: 'Stage Google', url: base + 'fsl/google' },
+                { label: 'EGMO Camp', url: base + 'fsl/egmo_camp' },
+                { label: 'Stage di matematica e fisica', url: base + 'fsl/aif_e_mathesis' },
               ]} 
             />
 
             <HeaderDropdowns title="Riconoscimenti"  main_page = '/riconoscimenti/intro'
               options={[
-                { label: 'Olimpiadi di informatica', url: '/olinfo/intro' },
-                { label: 'Olimpiadi di fisica', url: '/riconoscimenti/olifis' },
-                { label: 'Altri premi', url: '/riconoscimenti/altro' }
+                { label: 'Olimpiadi di informatica', url: base + 'olinfo/intro' },
+                { label: 'Olimpiadi di fisica', url: base + 'riconoscimenti/olifis' },
+                { label: 'Altri premi', url: base + 'riconoscimenti/altro' }
               ]} 
             />
 
-            <a href="/links" style="padding-left: 1rem"> <b> Altri link </b></a>
+            <a href={base + "links"} style="padding-left: 1rem"> <b> Altri link </b></a>
           </div>
         </nav>
       </header>

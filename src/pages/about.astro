@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/base.astro';
 
 <BaseLayout title="Chi sono?" description="Mi presento">
     <div class="main-frame">
-        <img src="/me.jpg" alt="Una foto di me" class="presentation-photo">
+        <img src={import.meta.env.BASE_URL + "me.jpg"} alt="Una foto di me" class="presentation-photo">
         
         <div class="presentation-text"> 
             <p>

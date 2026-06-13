@@ -1,7 +1,23 @@
 ---
-const { link } = Astro.props;
-const { img } = Astro.props;
-const {img_alt} = Astro.props;
+const rawLink = Astro.props.link || '';
+let link;
+if (/^https?:\/\//i.test(rawLink.replace(/^\/+/, ''))) {
+  link = rawLink.replace(/^\/+/, '');
+} else if (rawLink.startsWith('#') || rawLink.startsWith('mailto:') || rawLink.startsWith('tel:')) {
+  link = rawLink;
+} else {
+  link = import.meta.env.BASE_URL + rawLink.replace(/^\/+/, '');
+}
+
+const rawImg = Astro.props.img || '';
+let img;
+if (/^https?:\/\//i.test(rawImg.replace(/^\/+/, ''))) {
+  img = rawImg.replace(/^\/+/, '');
+} else {
+  img = import.meta.env.BASE_URL + rawImg.replace(/^\/+/, '');
+}
+const { img_alt } = Astro.props;
+
 // text is in slot
 
 ---

@@ -1,5 +1,13 @@
 ---
-const { link } = Astro.props;
+const rawLink = Astro.props.link || '';
+let link;
+if (/^https?:\/\//i.test(rawLink.replace(/^\/+/, ''))) {
+  link = rawLink.replace(/^\/+/, '');
+} else if (rawLink.startsWith('#') || rawLink.startsWith('mailto:') || rawLink.startsWith('tel:')) {
+  link = rawLink;
+} else {
+  link = import.meta.env.BASE_URL + rawLink.replace(/^\/+/, '');
+}
 const { icon } = Astro.props;
 const { title } = Astro.props;
 const { text } = Astro.props;

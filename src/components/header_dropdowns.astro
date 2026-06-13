@@ -3,14 +3,27 @@ const { title } = Astro.props;
 const { main_page } = Astro.props;
 const { options } = Astro.props;
 const {target = '_self'} = Astro.props;
+
+const mainPageLink = main_page.startsWith(import.meta.env.BASE_URL) ? main_page : (import.meta.env.BASE_URL + main_page.replace(/^\/+/, ''));
+const processedOptions = options.map(item => {
+  let url = item.url || '';
+  if (/^https?:\/\//i.test(url.replace(/^\/+/, ''))) {
+    url = url.replace(/^\/+/, '');
+  } else if (url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:')) {
+    // leave as is
+  } else if (!url.startsWith(import.meta.env.BASE_URL)) {
+    url = import.meta.env.BASE_URL + url.replace(/^\/+/, '');
+  }
+  return { ...item, url };
+});
 ---
 
 <div class="dropdown">
     <span class="dropdown-trigger">
-        <b> <a href={main_page} target={target}> {title} </a> </b> 
+        <b> <a href={mainPageLink} target={target}> {title} </a> </b> 
     </span>
     <div class="dropdown-menu">  
-    {options.map(item => (
+    {processedOptions.map(item => (
         <a href={item.url}> {item.label} </a>
     ))}
     </div>

@@ -12,7 +12,7 @@ import BaseLayout from '../layouts/base.astro';
       padding: 1.5rem ;
       width: 80%;
       height: auto;" 
-      src="/404.jpg" 
+      src={import.meta.env.BASE_URL + "404.jpg"} 
       alt="An error was detected."
     >
     <p class="centered">Purtroppo la pagina che stavi cercando non è stata trovata, riprova...</p>
