@@ -1,6 +1,12 @@
 ---
 const { date } = Astro.props;
-const { photo } = Astro.props;
+const rawPhoto = Astro.props.photo || '';
+let photo;
+if (/^https?:\/\//i.test(rawPhoto.replace(/^\/+/, ''))) {
+  photo = rawPhoto.replace(/^\/+/, '');
+} else {
+  photo = import.meta.env.BASE_URL + rawPhoto.replace(/^\/+/, '');
+}
 const { title } = Astro.props;
 const {dir} = Astro.props;
 ---

@@ -10,9 +10,24 @@ import Desc_Box from '../components/short_description_box.astro'
 
 
 <BaseLayout title="Sofia Maragò" description="La mia pagina principale.">
-  <section class = "spacing">
-    <h1> Benvenut* al mio sito! <br><hr> Sono Sofia Maragò. </h1>
-  </section> 
+  <section class="spacing">
+    <h1 style="display: grid; grid-template-columns: 1fr; place-items: center;">
+      <!-- Invisible placeholder to enforce exact natural layout dimensions -->
+      <div style="grid-area: 1 / 1; visibility: hidden;">
+        Benvenut* al mio sito!
+        <br>
+        <hr class="heading-divider" style="visibility: hidden;">
+        Sono Sofia Maragò.
+      </div>
+      <!-- Visible animated layer -->
+      <div style="grid-area: 1 / 1; text-align: center; width: 100%;">
+        <span class="line-1">Benvenut* al mio sito!</span><span class="cursor cursor-1"></span>
+        <br>
+        <hr class="heading-divider animated-divider">
+        <span class="line-2">Sono Sofia Maragò.</span><span class="cursor cursor-2"></span>
+      </div>
+    </h1>
+  </section>
 
   <section class = "main-content">
     
@@ -63,6 +78,34 @@ import Desc_Box from '../components/short_description_box.astro'
       text-align: center;
     }
 
+    .heading-divider {
+      width: 100%;
+      margin: 0.5em auto;
+      border: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-color-1), transparent);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 4px;
+      height: 1em;
+      background-color: var(--accent-color-1);
+      margin-left: 5px;
+      vertical-align: middle;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .cursor.blinking {
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      from, to { background-color: transparent; }
+      50% { background-color: var(--accent-color-1); }
+    }
+
     .main-content {
       background-color: var(--bg-color);
     }
@@ -79,5 +122,119 @@ import Desc_Box from '../components/short_description_box.astro'
       gap: 1rem;
     }
   </style>
+
+  <script>
+    function runAnimation() {
+      console.log("Vanilla JS Animation: Initializing typewriter effect...");
+      const line1 = document.querySelector('.line-1');
+      const line2 = document.querySelector('.line-2');
+      const divider = document.querySelector('.animated-divider');
+      const cursor1 = document.querySelector('.cursor-1');
+      const cursor2 = document.querySelector('.cursor-2');
+
+      if (!line1 || !line2 || !divider || !cursor1 || !cursor2) {
+        console.warn("Animation: elements not found, skipping.");
+        return;
+      }
+
+      // Default text fallbacks in case DOM starts empty due to caching
+      const defaultText1 = "Benvenut* al mio sito!";
+      const defaultText2 = "Sono Sofia Maragò.";
+
+      // Retrieve or cache the original text content
+      const text1 = line1.getAttribute('data-original-text') || line1.textContent || defaultText1;
+      const text2 = line2.getAttribute('data-original-text') || line2.textContent || defaultText2;
+
+      if (!line1.hasAttribute('data-original-text')) line1.setAttribute('data-original-text', text1);
+      if (!line2.hasAttribute('data-original-text')) line2.setAttribute('data-original-text', text2);
+
+      // Kill any running animation (handling re-runs safely)
+      window.__typewriterId = (window.__typewriterId || 0) + 1;
+      const currentId = window.__typewriterId;
+
+      // Clear the text elements so they can be typed out
+      line1.textContent = '';
+      line2.textContent = '';
+      cursor1.classList.remove('blinking');
+      cursor2.classList.remove('blinking');
+
+      // Initialize animation states
+      divider.style.transition = 'none';
+      divider.style.transform = 'scaleX(0)';
+      cursor1.style.opacity = '0';
+      cursor2.style.opacity = '0';
+
+      // Force a reflow so the transition="none" takes effect instantly before we add the transition back
+      void divider.offsetWidth; 
+      divider.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+
+      // Helper to type characters
+      const typeChars = (text, element, speed, callback) => {
+        let i = 0;
+        const type = () => {
+          if (window.__typewriterId !== currentId) return; // Stop if new animation started
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+          } else if (callback) {
+            callback();
+          }
+        };
+        type();
+      };
+
+      // 1. Show first cursor
+      cursor1.style.opacity = '1';
+      cursor1.classList.add('blinking');
+
+      setTimeout(() => {
+        if (window.__typewriterId !== currentId) return;
+        
+        // 2. Type first line (~60ms per char)
+        typeChars(text1, line1, 60, () => {
+          if (window.__typewriterId !== currentId) return;
+          
+          // 3. Hide first cursor, start divider animation
+          cursor1.style.opacity = '0';
+          cursor1.classList.remove('blinking');
+          divider.style.transform = 'scaleX(1)';
+
+          // 4. Wait for divider animation to finish (~700ms)
+          setTimeout(() => {
+            if (window.__typewriterId !== currentId) return;
+            
+            // 5. Show second cursor
+            cursor2.style.opacity = '1';
+            cursor2.classList.add('blinking');
+            
+            // 6. Type second line
+            typeChars(text2, line2, 60, () => {
+              if (window.__typewriterId !== currentId) return;
+              
+              // 7. Stop blinking and hide cursor after 3 seconds
+              setTimeout(() => {
+                if (window.__typewriterId !== currentId) return;
+                cursor2.classList.remove('blinking');
+                cursor2.style.opacity = '0';
+              }, 3000);
+            });
+          }, 700);
+        });
+      }, 100);
+    }
+
+    // Safely run the script, handling different DOM load states
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(runAnimation, 0); // Slight deferral ensures DOM updates are painted
+    } else {
+      document.addEventListener('DOMContentLoaded', runAnimation);
+    }
+    
+    document.addEventListener('astro:page-load', runAnimation);
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) runAnimation();
+    });
+  </script>
 </BaseLayout>
 
