@@ -70,11 +70,24 @@ import Desc_Box from '../../components/short_description_box.astro'
   .heading-text {
     align-items: center;
     justify-self: center;
-    font-size: 20px;
+    font-size: 1.25rem;
     padding: 3rem 5rem;
   }
 
   .line {
-    color: var(--accent-color-1)
+    color: var(--accent-color-1);
+  }
+
+  @media (max-width: 868px) {
+    .main-frame {
+      padding: 2rem 1.5rem;
+    }
+    .secondary-wrapper {
+      grid-template-columns: 1fr;
+      padding: 1.5rem 0;
+    }
+    .heading-text {
+      padding: 1.5rem 1rem;
+    }
   }
 </style>

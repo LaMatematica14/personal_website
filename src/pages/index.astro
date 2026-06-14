@@ -11,9 +11,9 @@ import Desc_Box from '../components/short_description_box.astro'
 
 <BaseLayout title="Sofia Maragò" description="La mia pagina principale.">
   <section class="spacing">
-    <h1 style="display: grid; grid-template-columns: 1fr; place-items: center;">
+    <h1 style="display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; width: 100%; max-width: 100vw; overflow: hidden;">
       <!-- Invisible placeholder to enforce exact natural layout dimensions -->
-      <div style="grid-area: 1 / 1; visibility: hidden;">
+      <div style="grid-area: 1 / 1; visibility: hidden; width: 100%;">
         Benvenut* al mio sito!
         <br>
         <hr class="heading-divider" style="visibility: hidden;">
@@ -59,8 +59,9 @@ import Desc_Box from '../components/short_description_box.astro'
   <style>
     body{
       background-image: url("/background.png");
-      background-size: 100%; 
+      background-size: cover; 
       background-position: center;
+      background-attachment: fixed;
     }
 
     .spacing {
@@ -71,7 +72,7 @@ import Desc_Box from '../components/short_description_box.astro'
       justify-content: center;
       min-height: 600px;
       font-family: 'Terminus', Courier, 'Courier New', monospace;
-      font-size: 50px;
+      font-size: 3.125rem;
     }
 
     .spacing h1{
@@ -126,7 +127,7 @@ import Desc_Box from '../components/short_description_box.astro'
       .spacing {
         padding: 2rem 1.5rem;
         min-height: 400px;
-        font-size: 24px;
+        font-size: 1.6rem;
       }
       .featured-links {
         padding: 2rem 1.5rem;
