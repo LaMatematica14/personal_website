@@ -125,4 +125,35 @@ const processedOptions = options.map(item => {
     border-radius: 4px;
   }
 
+  @media (max-width: 868px) {
+    .dropdown {
+      width: 100%;
+    }
+    .dropdown-trigger {
+      margin-left: 0;
+      padding: 0;
+      font-size: 1.2rem;
+    }
+    .dropdown-menu {
+      position: static;
+      box-shadow: none;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      padding: 0 0 0 1rem;
+      margin-top: 0.5rem;
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+    }
+    .dropdown:hover .dropdown-menu {
+      transform: none;
+    }
+    .dropdown-menu a {
+      font-size: 1.05rem;
+      padding: 0.5rem 0;
+    }
+  }
+
 </style>

@@ -121,6 +121,24 @@ import Desc_Box from '../components/short_description_box.astro'
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 1rem;
     }
+
+    @media (max-width: 868px) {
+      .spacing {
+        padding: 2rem 1.5rem;
+        min-height: 400px;
+        font-size: 24px;
+      }
+      .featured-links {
+        padding: 2rem 1.5rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 0;
+      }
+      .heading-divider {
+        margin: 0.8em auto;
+      }
+    }
   </style>
 
   <script>
